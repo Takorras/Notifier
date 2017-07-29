@@ -8,8 +8,10 @@
 
     <!--メインの内容を作成-->
     <android.support.design.widget.CoordinatorLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context='.activities.MainActivity'>
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -21,8 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:theme="@style/NoActionBarTheme"
-                app:popupTheme="@style/AppTheme.PopupOverlay"/>
-
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
         </android.support.design.widget.AppBarLayout>
 
         <FrameLayout
@@ -37,6 +38,7 @@
         android:id="@+id/navigation"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start"/>
+        android:layout_gravity="start"
+        app:menu="@menu/navigation_menu"/>
 
 </android.support.v4.widget.DrawerLayout>
