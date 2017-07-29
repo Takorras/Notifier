@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 //      setting NavigationView
         val navigation = findViewById(R.id.navigation) as NavigationView
         navigation.setNavigationItemSelectedListener(NavigationListener())
-        navigation.setCheckedItem(R.id.recently_menu)
+        navigation.setCheckedItem(R.id.menu_recently)
     }
 
     override fun onStop() {
@@ -47,9 +47,21 @@ class MainActivity : AppCompatActivity() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onNavigationChanged(e: NavigationEvent) {
+        val toolbar = findViewById(R.id.toolbar) as Toolbar
         val drawer = findViewById(R.id.drawer) as DrawerLayout
         val navigation = findViewById(R.id.navigation) as NavigationView
 
+        when (e.itemId) {
+            R.id.menu_recently -> {
+                toolbar.title = "Recently"
+            }
+            R.id.menu_setting -> {
+                toolbar.title = "Setting"
+            }
+            R.id.menu_sync -> {
+                toolbar.title = "Sync with Google"
+            }
+        }
         navigation.setCheckedItem(e.itemId)
         drawer.closeDrawer(GravityCompat.START)
     }
