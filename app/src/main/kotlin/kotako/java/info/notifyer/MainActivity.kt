@@ -1,5 +1,6 @@
 package kotako.java.info.notifyer
 
+import android.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -10,6 +11,7 @@ import android.widget.Toast
 import kotako.java.info.notifyer.Event.NavigationEvent
 import kotako.java.info.notifyer.Event.ToastEvent
 import kotako.java.info.notifyer.View.NavigationListener
+import kotako.java.info.notifyer.View.TaskDialog
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -30,7 +32,13 @@ class MainActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener { drawer.openDrawer(GravityCompat.START) }
         toolbar.inflateMenu(R.menu.menu_toolbar)
         toolbar.setOnMenuItemClickListener {
-            Toast.makeText(applicationContext, "add", Toast.LENGTH_SHORT).show()
+            val ft = fragmentManager.beginTransaction()
+            val prevFragment = fragmentManager.findFragmentByTag("dialog")
+            if (prevFragment != null) ft.remove(prevFragment)
+            ft.addToBackStack(null)
+
+            val fragment: DialogFragment = TaskDialog.newInstance()
+            fragment.show(ft, "dialog")
             true
         }
 

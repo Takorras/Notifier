@@ -1,56 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/dialog_task"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <EditText
-        android:id="@+id/text_title_dialog_task"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Title" />
+    android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/linear_milestone_dialog_task"
+        android:id="@+id/linear_title_dialog_task"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/text_title_dialog_task">
+        android:background="@color/colorPrimary"
+        android:padding="8dp">
 
         <EditText
-            android:id="@+id/text_milestone_dialog_task"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:hint="milestone" />
+            android:id="@+id/text_title_dialog_task"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:hint="New Task"
+            android:textColor="@color/colorTextAccent"
+            android:textColorHint="@color/colorTextAccent"
+            android:textColorLink="@color/colorTextAccent" />
 
-        <Button
-            android:id="@+id/button_milestone_dialog_task"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Pick Date" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/linear_milestone_dialog_task">
+        android:padding="16dp">
 
-        <EditText
-            android:id="@+id/text_genre_dialog_task"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:hint="Genre" />
+        <LinearLayout
+            android:id="@+id/linear_milestone_dialog_task"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/button_genre_dialog_task"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Pick Genre" />
-    </LinearLayout>
+            <EditText
+                android:id="@+id/text_milestone_dialog_task"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:hint="milestone" />
 
-</RelativeLayout>
+            <Button
+                android:id="@+id/button_milestone_dialog_task"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Select" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linear_milestone_dialog_task">
+
+            <EditText
+                android:id="@+id/text_genre_dialog_task"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:hint="Genre" />
+
+            <Button
+                android:id="@+id/button_genre_dialog_task"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Select" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>
