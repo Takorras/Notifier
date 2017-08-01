@@ -8,40 +8,48 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotako.java.info.notifyer.Model.Task
 import kotako.java.info.notifyer.R
+import kotako.java.info.notifyer.View.Adapter.TaskRecyclerViewAdapter
 import org.greenrobot.eventbus.EventBus
+import java.util.*
 
 class TasksFragment : Fragment() {
 
     var applicationContext :Context? = null
+    var recyclerView :RecyclerView? = null
 
-    fun TasksFragment() {}
-
-    fun newInstance() {
+    fun newInstance() :TasksFragment{
         return TasksFragment()
     }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         applicationContext = context!!.applicationContext
-        EventBus.getDefault().register(this)
+        //EventBus.getDefault().register(this)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_tasks, container, false)
-        val fragment = view.findViewById(R.id.fragment_tasks) as RecyclerView
-
-        fragment.layoutManager = LinearLayoutManager(applicationContext!!)
+        recyclerView = view.findViewById(R.id.fragment_tasks) as RecyclerView
+        recyclerView!!.layoutManager = LinearLayoutManager(applicationContext!!)
         return view
     }
 
-    override fun onPause() {
-        EventBus.getDefault().unregister(this)
-        super.onPause()
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        val list: ArrayList<Task> = ArrayList()
+        list.add(Task("task1", "あと1日", "Genre1"))
+        list.add(Task("task2", "あと2日", "Genre2"))
+        list.add(Task("task3", "あと3日", "Genre3"))
+
+        val adapter = TaskRecyclerViewAdapter(list)
+        recyclerView!!.adapter = adapter
     }
 
+    override fun onPause() {
+        //EventBus.getDefault().unregister(this)
+        super.onPause()
+    }
 }

@@ -1,4 +1,4 @@
-package kotako.java.info.notifyer.View
+package kotako.java.info.notifyer.View.Listener
 
 import android.support.design.widget.NavigationView
 import android.view.MenuItem

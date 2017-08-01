@@ -10,9 +10,10 @@ import android.support.v7.widget.Toolbar
 import android.widget.Toast
 import kotako.java.info.notifyer.Event.NavigationEvent
 import kotako.java.info.notifyer.Event.ToastEvent
-import kotako.java.info.notifyer.View.NavigationListener
+import kotako.java.info.notifyer.View.Listener.NavigationListener
 import kotako.java.info.notifyer.View.SettingFragment
 import kotako.java.info.notifyer.View.TaskDialog
+import kotako.java.info.notifyer.View.TasksFragment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -47,6 +48,11 @@ class MainActivity : AppCompatActivity() {
         val navigation = findViewById(R.id.navigation) as NavigationView
         navigation.setNavigationItemSelectedListener(NavigationListener())
         navigation.setCheckedItem(R.id.menu_recently)
+
+//      setting fragment
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, TasksFragment().newInstance())
+                .commit()
     }
 
     override fun onStop() {
