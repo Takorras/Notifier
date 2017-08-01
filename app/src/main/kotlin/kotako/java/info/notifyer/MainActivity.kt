@@ -11,6 +11,7 @@ import android.widget.Toast
 import kotako.java.info.notifyer.Event.NavigationEvent
 import kotako.java.info.notifyer.Event.ToastEvent
 import kotako.java.info.notifyer.View.NavigationListener
+import kotako.java.info.notifyer.View.SettingFragment
 import kotako.java.info.notifyer.View.TaskDialog
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -65,6 +66,9 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.menu_setting -> {
                 toolbar.title = "Setting"
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, SettingFragment())
+                        .commit()
             }
             R.id.menu_sync -> {
                 toolbar.title = "Sync with Google"
