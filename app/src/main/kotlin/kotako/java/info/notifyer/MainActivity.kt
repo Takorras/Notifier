@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        EventBus.getDefault().register(this)
 
         val drawer = findViewById(R.id.drawer) as DrawerLayout
 
@@ -55,6 +54,11 @@ class MainActivity : AppCompatActivity() {
                 .commit()
     }
 
+    override fun onStart() {
+        EventBus.getDefault().register(this)
+        super.onStart()
+    }
+
     override fun onStop() {
         EventBus.getDefault().unregister(this)
         super.onStop()
@@ -69,6 +73,9 @@ class MainActivity : AppCompatActivity() {
         when (e.itemId) {
             R.id.menu_recently -> {
                 toolbar.title = "Recently"
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, TasksFragment().newInstance())
+                        .commit()
             }
             R.id.menu_setting -> {
                 toolbar.title = "Setting"
