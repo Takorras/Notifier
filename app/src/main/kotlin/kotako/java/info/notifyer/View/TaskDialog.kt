@@ -4,12 +4,15 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.DialogFragment
+import android.app.usage.UsageEvents
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import kotako.java.info.notifyer.Event.DateSetEvent
+import kotako.java.info.notifyer.Event.TaskCreatedEvent
 import kotako.java.info.notifyer.Event.ToastEvent
+import kotako.java.info.notifyer.Model.Task
 import kotako.java.info.notifyer.R
 import kotako.java.info.notifyer.View.Listener.DateSetListener
 import org.greenrobot.eventbus.EventBus
@@ -40,7 +43,7 @@ class TaskDialog : DialogFragment() {
 
 //      SaveボタンCancelボタンの作成とイベントのセット
         builder.setView(dialogView)
-                .setPositiveButton("Save", { _, _ -> getInputData() })
+                .setPositiveButton("Save", { _, _ -> EventBus.getDefault().post(TaskCreatedEvent(getInputData())) })
                 .setNegativeButton("Cancel", { _, _ -> dismiss() })
 
         return builder.create()
@@ -56,16 +59,18 @@ class TaskDialog : DialogFragment() {
         super.onStop()
     }
 
-    fun getInputData() {
-        val name = (dialogView!!.findViewById(R.id.text_title_dialog_task) as TextView).text.toString()
-        val milestone = (dialogView!!.findViewById(R.id.text_milestone_dialog_task) as TextView).text.toString()
-        val genre = (dialogView!!.findViewById(R.id.text_genre_dialog_task) as TextView).text.toString()
-        EventBus.getDefault().post(ToastEvent(name + milestone + genre))
+    fun getInputData(): Task {
+        return Task(
+                (dialogView!!.findViewById(R.id.text_title_dialog_task) as TextView).text.toString(),
+                (dialogView!!.findViewById(R.id.text_genre_dialog_task) as TextView).text.toString(),
+                2017,
+                9,
+                7)
     }
 
     //  DatePickerDialogのコールバックリスナから返ってくる、日付の値を処理
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onDateSet(e: DateSetEvent) {
-        (dialogView!!.findViewById(R.id.text_milestone_dialog_task) as TextView).text = "${e.y}/${e.m}/${e.d}"
+        (dialogView!!.findViewById(R.id.text_milestone_dialog_task) as TextView).text = "${e.y} - ${e.m} - ${e.d}"
     }
 }

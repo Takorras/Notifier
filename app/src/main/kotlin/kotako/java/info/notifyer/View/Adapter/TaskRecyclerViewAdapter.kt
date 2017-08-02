@@ -26,10 +26,6 @@ class TaskRecyclerViewAdapter(val list: List<Task>) : RecyclerView.Adapter<TaskV
     }
 
     fun daysDiff(calendar: Calendar): Long {
-        val current = System.currentTimeMillis()
-        val milestone = calendar.timeInMillis
-        var diff = milestone - current
-        diff /= 86400000
-        return diff
+        return (calendar.timeInMillis - System.currentTimeMillis()) / 86400000
     }
 }
