@@ -44,8 +44,7 @@ class TasksFragment : Fragment() {
         list.add(Task("task2", "Genre2", 2017, 7, 17))
         list.add(Task("task3", "Genre3", 2017, 7, 16))
 
-        val adapter = TaskRecyclerViewAdapter(list)
-        recyclerView!!.adapter = adapter
+        recyclerView!!.adapter = TaskRecyclerViewAdapter(list)
     }
 
     override fun onPause() {

@@ -25,13 +25,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val drawer = findViewById(R.id.drawer) as DrawerLayout
-
 //      setting Toolbar
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         toolbar.title = "Notifier"
         toolbar.setNavigationIcon(R.mipmap.menu_white)
-        toolbar.setNavigationOnClickListener { drawer.openDrawer(GravityCompat.START) }
+        toolbar.setNavigationOnClickListener { (findViewById(R.id.drawer) as DrawerLayout).openDrawer(GravityCompat.START) }
 
 //      setting floating action button
         val fab = findViewById(R.id.fab) as FloatingActionButton
@@ -69,8 +67,6 @@ class MainActivity : AppCompatActivity() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onNavigationChanged(e: NavigationEvent) {
         val toolbar = findViewById(R.id.toolbar) as Toolbar
-        val drawer = findViewById(R.id.drawer) as DrawerLayout
-        val navigation = findViewById(R.id.navigation) as NavigationView
         val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.show()
 
@@ -93,8 +89,8 @@ class MainActivity : AppCompatActivity() {
                 fab.hide()
             }
         }
-        navigation.setCheckedItem(e.itemId)
-        drawer.closeDrawer(GravityCompat.START)
+        (findViewById(R.id.navigation) as NavigationView).setCheckedItem(e.itemId)
+        (findViewById(R.id.drawer) as DrawerLayout).closeDrawer(GravityCompat.START)
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
