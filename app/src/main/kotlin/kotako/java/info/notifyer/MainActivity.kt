@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.menu_sync -> {
                 toolbar.title = "Sync with Google"
+                fab.hide()
             }
         }
         navigation.setCheckedItem(e.itemId)

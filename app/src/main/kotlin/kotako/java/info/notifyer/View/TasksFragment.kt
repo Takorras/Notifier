@@ -16,10 +16,10 @@ import java.util.*
 
 class TasksFragment : Fragment() {
 
-    var applicationContext :Context? = null
-    var recyclerView :RecyclerView? = null
+    var applicationContext: Context? = null
+    var recyclerView: RecyclerView? = null
 
-    fun newInstance() :TasksFragment{
+    fun newInstance(): TasksFragment {
         return TasksFragment()
     }
 
@@ -40,9 +40,9 @@ class TasksFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         val list: ArrayList<Task> = ArrayList()
-        list.add(Task("task1", "あと1日", "Genre1"))
-        list.add(Task("task2", "あと2日", "Genre2"))
-        list.add(Task("task3", "あと3日", "Genre3"))
+        list.add(Task("task1", "Genre1", 2017, 7, 18))
+        list.add(Task("task2", "Genre2", 2017, 7, 17))
+        list.add(Task("task3", "Genre3", 2017, 7, 16))
 
         val adapter = TaskRecyclerViewAdapter(list)
         recyclerView!!.adapter = adapter
