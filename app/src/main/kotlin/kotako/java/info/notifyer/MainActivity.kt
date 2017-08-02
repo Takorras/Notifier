@@ -71,6 +71,8 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         val drawer = findViewById(R.id.drawer) as DrawerLayout
         val navigation = findViewById(R.id.navigation) as NavigationView
+        val fab = findViewById(R.id.fab) as FloatingActionButton
+        fab.show()
 
         when (e.itemId) {
             R.id.menu_recently -> {
@@ -81,6 +83,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.menu_setting -> {
                 toolbar.title = "Setting"
+                fab.hide()
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, SettingFragment())
                         .commit()
