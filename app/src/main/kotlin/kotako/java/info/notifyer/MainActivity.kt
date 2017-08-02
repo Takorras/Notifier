@@ -3,6 +3,7 @@ package kotako.java.info.notifyer
 import android.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
@@ -31,8 +32,10 @@ class MainActivity : AppCompatActivity() {
         toolbar.title = "Notifier"
         toolbar.setNavigationIcon(R.mipmap.menu_white)
         toolbar.setNavigationOnClickListener { drawer.openDrawer(GravityCompat.START) }
-        toolbar.inflateMenu(R.menu.menu_toolbar)
-        toolbar.setOnMenuItemClickListener {
+
+//      setting floating action button
+        val fab = findViewById(R.id.fab) as FloatingActionButton
+        fab.setOnClickListener {
             val ft = fragmentManager.beginTransaction()
             val prevFragment = fragmentManager.findFragmentByTag("dialog")
             if (prevFragment != null) ft.remove(prevFragment)
@@ -40,7 +43,6 @@ class MainActivity : AppCompatActivity() {
 
             val fragment: DialogFragment = TaskDialog.newInstance()
             fragment.show(ft, "dialog")
-            true
         }
 
 //      setting NavigationView

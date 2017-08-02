@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import kotako.java.info.notifyer.R
 
 class TaskDialog : DialogFragment() {
@@ -23,7 +24,21 @@ class TaskDialog : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view: View = inflater!!.inflate(R.layout.dialog_task, container, false)
-        // コンポーネントにイベントをセット
+
+//      cancelボタン
+        val cancelButton = view.findViewById(R.id.button_cancel_dialog_task) as Button
+        cancelButton.setOnClickListener { dismiss() }
+
+//      saveボタン
+        val saveButton = view.findViewById(R.id.button_save_dialog_task) as Button
+        saveButton.setOnClickListener { dismiss() }
+
+//      milestoneのselectを押すとdatePickerがでてくる
+        val datePickButton = view.findViewById(R.id.button_milestone_dialog_task) as Button
+        datePickButton.setOnClickListener {  }
+
+
+
         return view
     }
 }

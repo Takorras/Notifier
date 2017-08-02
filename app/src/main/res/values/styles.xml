@@ -24,6 +24,10 @@
         <item name="android:windowBackground">@null</item>
     </style>
 
+    <style name="ButtonHighLight" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/colorAccent</item>
+    </style>
+
     <style name="AppTheme.FlatButton" parent="Widget.AppCompat.Button.Borderless"/>
 
     <style name="AppTheme.FlatButton.Accent" parent="Widget.AppCompat.Button.Borderless.Colored"/>
