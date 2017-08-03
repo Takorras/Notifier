@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import kotako.java.info.notifyer.Model.Task
 import kotako.java.info.notifyer.R
 import kotako.java.info.notifyer.View.TaskViewHolder
-import java.util.Calendar
+import java.util.*
 
 class TaskRecyclerViewAdapter(val list: List<Task>) : RecyclerView.Adapter<TaskViewHolder>() {
 
@@ -18,14 +18,14 @@ class TaskRecyclerViewAdapter(val list: List<Task>) : RecyclerView.Adapter<TaskV
 
     override fun onBindViewHolder(holder: TaskViewHolder?, position: Int) {
         holder!!.contentView.text = list[position].content
-        holder.milestoneView.text = "あと${daysDiff(list[position].milestone)}日"
+        holder.milestoneView.text = "あと${daysDiff(list[position].milestone!!)}日"
     }
 
     override fun getItemCount(): Int {
         return list.size
     }
 
-    fun daysDiff(calendar: Calendar): Long {
-        return (calendar.timeInMillis - System.currentTimeMillis()) / 86400000
+    fun daysDiff(date: Date): Long {
+        return (date.time - System.currentTimeMillis()) / 86400000
     }
 }
