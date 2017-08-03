@@ -58,7 +58,7 @@ class TaskDialog : DialogFragment() {
 
     fun getInputData(): Task {
         val calendar = Calendar.getInstance()
-        calendar.set(2017,9,1)
+        calendar.set(2017,8,1)
 
         return Task(
                 (dialogView!!.findViewById(R.id.text_title_dialog_task) as TextView).text.toString(),

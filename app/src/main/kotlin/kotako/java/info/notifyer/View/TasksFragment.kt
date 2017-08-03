@@ -21,7 +21,7 @@ class TasksFragment : Fragment() {
 
     var recyclerView: RecyclerView? = null
     var list: ArrayList<Task> = ArrayList()
-    var realm :Realm? = null
+    var realm: Realm? = null
 
     fun newInstance(): TasksFragment {
         return TasksFragment()
