@@ -4,22 +4,19 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.DialogFragment
-import android.app.usage.UsageEvents
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import kotako.java.info.notifyer.Event.DateSetEvent
 import kotako.java.info.notifyer.Event.TaskCreatedEvent
-import kotako.java.info.notifyer.Event.ToastEvent
 import kotako.java.info.notifyer.Model.Task
 import kotako.java.info.notifyer.R
 import kotako.java.info.notifyer.View.Listener.DateSetListener
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.util.Calendar
-import java.util.GregorianCalendar
+import java.util.*
 
 class TaskDialog : DialogFragment() {
 
@@ -60,17 +57,21 @@ class TaskDialog : DialogFragment() {
     }
 
     fun getInputData(): Task {
+        val calendar = Calendar.getInstance()
+        calendar.set(2017,9,1)
+
         return Task(
                 (dialogView!!.findViewById(R.id.text_title_dialog_task) as TextView).text.toString(),
                 (dialogView!!.findViewById(R.id.text_genre_dialog_task) as TextView).text.toString(),
-                2017,
-                9,
-                7)
+                calendar.time
+        )
     }
 
     //  DatePickerDialogのコールバックリスナから返ってくる、日付の値を処理
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onDateSet(e: DateSetEvent) {
+        var date = Date()
+
         (dialogView!!.findViewById(R.id.text_milestone_dialog_task) as TextView).text = "${e.y} - ${e.m} - ${e.d}"
     }
 }

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import io.realm.Realm
 import kotako.java.info.notifyer.Event.TaskCreatedEvent
 import kotako.java.info.notifyer.Model.Task
 import kotako.java.info.notifyer.R
@@ -40,10 +41,6 @@ class TasksFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        list.add(Task("task1", "Genre1", 2017, 7, 18))
-        list.add(Task("task2", "Genre2", 2017, 7, 17))
-        list.add(Task("task3", "Genre3", 2017, 7, 16))
-
         recyclerView!!.adapter = TaskRecyclerViewAdapter(list)
     }
 
@@ -52,8 +49,17 @@ class TasksFragment : Fragment() {
         super.onStop()
     }
 
+    // realmへの保存とカードの作成
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onTaskCreated(e: TaskCreatedEvent) {
-        list.add(e.task)
+        Realm.getDefaultInstance().use { realm ->
+            realm.executeTransaction {
+                val task: Task = realm.createObject(Task::class.java)
+                task.content = e.task.content
+                task.genre = e.task.genre
+                task.milestone = e.task.milestone
+                list.add(task)
+            }
+        }
     }
 }
