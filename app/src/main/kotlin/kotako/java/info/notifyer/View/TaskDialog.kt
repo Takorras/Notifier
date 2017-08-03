@@ -70,8 +70,6 @@ class TaskDialog : DialogFragment() {
     //  DatePickerDialogのコールバックリスナから返ってくる、日付の値を処理
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onDateSet(e: DateSetEvent) {
-        var date = Date()
-
         (dialogView!!.findViewById(R.id.text_milestone_dialog_task) as TextView).text = "${e.y} - ${e.m} - ${e.d}"
     }
 }

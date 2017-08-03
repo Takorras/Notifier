@@ -21,6 +21,7 @@ class TasksFragment : Fragment() {
 
     var recyclerView: RecyclerView? = null
     var list: ArrayList<Task> = ArrayList()
+    var realm :Realm? = null
 
     fun newInstance(): TasksFragment {
         return TasksFragment()
@@ -41,6 +42,10 @@ class TasksFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+//      RealmでTaskを全て持ってくる
+        realm = Realm.getDefaultInstance()
+        list.addAll(realm!!.where(Task::class.java).findAll())
+
         recyclerView!!.adapter = TaskRecyclerViewAdapter(list)
     }
 
@@ -49,17 +54,23 @@ class TasksFragment : Fragment() {
         super.onStop()
     }
 
-    // realmへの保存とカードの作成
+    override fun onDestroy() {
+        realm!!.close()
+        super.onDestroy()
+    }
+
+    // realmの保存とカードの作成
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onTaskCreated(e: TaskCreatedEvent) {
+        var task: Task? = null
         Realm.getDefaultInstance().use { realm ->
             realm.executeTransaction {
-                val task: Task = realm.createObject(Task::class.java)
-                task.content = e.task.content
-                task.genre = e.task.genre
-                task.milestone = e.task.milestone
-                list.add(task)
+                task = realm.createObject(Task::class.java)
+                task!!.content = e.task.content
+                task!!.genre = e.task.genre
+                task!!.milestone = e.task.milestone
             }
         }
+        list.add(task!!)
     }
 }
