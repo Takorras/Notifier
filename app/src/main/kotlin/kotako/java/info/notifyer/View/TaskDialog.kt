@@ -21,6 +21,7 @@ import java.util.*
 class TaskDialog : DialogFragment() {
 
     var dialogView: View? = null
+    var date: Date? = null
 
     companion object {
         fun newInstance(): TaskDialog {
@@ -57,19 +58,17 @@ class TaskDialog : DialogFragment() {
     }
 
     fun getInputData(): Task {
-        val calendar = Calendar.getInstance()
-        calendar.set(2017,8,1)
-
         return Task(
                 (dialogView!!.findViewById(R.id.text_title_dialog_task) as TextView).text.toString(),
                 (dialogView!!.findViewById(R.id.text_genre_dialog_task) as TextView).text.toString(),
-                calendar.time
-        )
+                date)
     }
 
     //  DatePickerDialogのコールバックリスナから返ってくる、日付の値を処理
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onDateSet(e: DateSetEvent) {
-        (dialogView!!.findViewById(R.id.text_milestone_dialog_task) as TextView).text = "${e.y} - ${e.m} - ${e.d}"
+        date = e.date
+        (dialogView!!.findViewById(R.id.text_milestone_dialog_task) as TextView).text =
+                android.text.format.DateFormat.getLongDateFormat(activity).format(date)
     }
 }
