@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import io.realm.Realm
 import kotako.java.info.notifyer.Event.TaskCreatedEvent
-import kotako.java.info.notifyer.Event.TaskDestoyEvent
+import kotako.java.info.notifyer.Event.TaskDestroyEvent
 import kotako.java.info.notifyer.Model.Task
 import kotako.java.info.notifyer.R
 import kotako.java.info.notifyer.View.Adapter.TaskRecyclerViewAdapter
@@ -70,15 +70,10 @@ class TasksFragment : Fragment() {
 
     //  realmからの削除とカードの削除
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onTaskDestroyed(e: TaskDestoyEvent) {
-        val target: Task = list[e.taskId]
-
-//      Realmからの削除
-        val result = realm!!.where(Task::class.java).equalTo("id", target.id).findAll()
+    fun onTaskDestroyed(e: TaskDestroyEvent) {
+        val result = realm!!.where(Task::class.java).equalTo("id", list.removeAt(e.id).id).findAll()
         realm!!.executeTransaction { result.deleteAllFromRealm() }
 
-//      ビューの削除
-        list.remove(target)
-        recyclerView!!.adapter.notifyItemRemoved(e.taskId)
+        recyclerView!!.adapter.notifyItemRemoved(e.id)
     }
 }

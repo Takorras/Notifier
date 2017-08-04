@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotako.java.info.notifyer.Event.TaskDestoyEvent
+import kotako.java.info.notifyer.Event.TaskDestroyEvent
 import kotako.java.info.notifyer.Event.ToastEvent
 import kotako.java.info.notifyer.Model.Task
 import kotako.java.info.notifyer.R
@@ -23,11 +23,10 @@ class TaskRecyclerViewAdapter(val list: List<Task>) : RecyclerView.Adapter<TaskV
         holder!!.contentView.text = list[position].content
         holder.milestoneView.text = "あと${daysDiff(list[position].milestone)}日"
 
-        holder.itemView.setOnClickListener { EventBus.getDefault().post(ToastEvent("selected")) }
+        holder.itemView.setOnClickListener { EventBus.getDefault().post(ToastEvent("${holder.adapterPosition}selected")) }
         holder.itemView.setOnLongClickListener {
-            EventBus.getDefault().post(TaskDestoyEvent(position))
-            true
-        }
+            EventBus.getDefault().post(TaskDestroyEvent(holder.adapterPosition))
+            true }
     }
 
     override fun getItemCount(): Int {
