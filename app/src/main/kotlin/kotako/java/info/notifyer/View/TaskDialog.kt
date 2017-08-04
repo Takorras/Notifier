@@ -6,7 +6,6 @@ import android.app.Dialog
 import android.app.DialogFragment
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import kotako.java.info.notifyer.Event.DateSetEvent
 import kotako.java.info.notifyer.Event.TaskCreatedEvent
@@ -37,7 +36,7 @@ class TaskDialog : DialogFragment() {
 //      DatePickerの作成と、ボタンへのセット
         val calendar = GregorianCalendar()
         val datePickerDialog = DatePickerDialog(activity, DateSetListener(), calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DATE])
-        (dialogView!!.findViewById(R.id.button_milestone_dialog_task) as Button).setOnClickListener { datePickerDialog.show() }
+        (dialogView!!.findViewById(R.id.spinner_dialog_task) as TextView).setOnClickListener { datePickerDialog.show() }
 
 //      SaveボタンCancelボタンの作成とイベントのセット
         builder.setView(dialogView)
@@ -68,7 +67,7 @@ class TaskDialog : DialogFragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onDateSet(e: DateSetEvent) {
         date = e.date
-        (dialogView!!.findViewById(R.id.text_milestone_dialog_task) as TextView).text =
+        (dialogView!!.findViewById(R.id.spinner_dialog_task) as TextView).text =
                 android.text.format.DateFormat.getLongDateFormat(activity).format(date)
     }
 }
