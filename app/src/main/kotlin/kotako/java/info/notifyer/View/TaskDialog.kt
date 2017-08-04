@@ -21,7 +21,7 @@ import java.util.*
 class TaskDialog : DialogFragment() {
 
     var dialogView: View? = null
-    var date: Date? = null
+    var date: Date = Date()
 
     companion object {
         fun newInstance(): TaskDialog {

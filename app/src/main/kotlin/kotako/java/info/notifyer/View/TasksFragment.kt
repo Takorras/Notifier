@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import io.realm.Realm
 import kotako.java.info.notifyer.Event.TaskCreatedEvent
+import kotako.java.info.notifyer.Event.TaskDestoyEvent
 import kotako.java.info.notifyer.Model.Task
 import kotako.java.info.notifyer.R
 import kotako.java.info.notifyer.View.Adapter.TaskRecyclerViewAdapter
@@ -62,15 +63,22 @@ class TasksFragment : Fragment() {
     // realmの保存とカードの作成
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onTaskCreated(e: TaskCreatedEvent) {
-        var task: Task? = null
-        Realm.getDefaultInstance().use { realm ->
-            realm.executeTransaction {
-                task = realm.createObject(Task::class.java)
-                task!!.content = e.task.content
-                task!!.genre = e.task.genre
-                task!!.milestone = e.task.milestone
-            }
-        }
-        list.add(task!!)
+        realm!!.executeTransaction { realm -> realm.copyToRealmOrUpdate(e.task) }
+        list.add(e.task)
+        recyclerView!!.adapter.notifyItemInserted(list.size - 1)
+    }
+
+    //  realmからの削除とカードの削除
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onTaskDestroyed(e: TaskDestoyEvent) {
+        val target: Task = list[e.taskId]
+
+//      Realmからの削除
+        val result = realm!!.where(Task::class.java).equalTo("id", target.id).findAll()
+        realm!!.executeTransaction { result.deleteAllFromRealm() }
+
+//      ビューの削除
+        list.remove(target)
+        recyclerView!!.adapter.notifyItemRemoved(e.taskId)
     }
 }
