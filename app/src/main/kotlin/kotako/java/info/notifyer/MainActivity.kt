@@ -10,9 +10,11 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.widget.Toolbar
 import android.widget.Toast
 import kotako.java.info.notifyer.Event.NavigationEvent
+import kotako.java.info.notifyer.Event.TaskShowEvent
 import kotako.java.info.notifyer.Event.ToastEvent
 import kotako.java.info.notifyer.View.Listener.NavigationListener
 import kotako.java.info.notifyer.View.SettingFragment
+import kotako.java.info.notifyer.View.TaskDescriptionDialog
 import kotako.java.info.notifyer.View.TaskDialog
 import kotako.java.info.notifyer.View.TasksFragment
 import org.greenrobot.eventbus.EventBus
@@ -35,12 +37,12 @@ class MainActivity : AppCompatActivity() {
         val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener {
             val ft = fragmentManager.beginTransaction()
-            val prevFragment = fragmentManager.findFragmentByTag("dialog")
+            val prevFragment = fragmentManager.findFragmentByTag("dialog_create")
             if (prevFragment != null) ft.remove(prevFragment)
             ft.addToBackStack(null)
 
             val fragment: DialogFragment = TaskDialog.newInstance()
-            fragment.show(ft, "dialog")
+            fragment.show(ft, "dialog_create")
         }
 
 //      setting NavigationView
@@ -96,6 +98,17 @@ class MainActivity : AppCompatActivity() {
     @Subscribe(threadMode = ThreadMode.ASYNC)
     fun showToast(e: ToastEvent) {
         runOnUiThread { Toast.makeText(applicationContext, e.msg, Toast.LENGTH_SHORT).show() }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun showTaskDescription(e: TaskShowEvent) {
+        val ft = fragmentManager.beginTransaction()
+        val prevFragment = fragmentManager.findFragmentByTag("dialog_show")
+        if (prevFragment != null) ft.remove(prevFragment)
+        ft.addToBackStack(null)
+
+        val fragment: DialogFragment = TaskDescriptionDialog.newInstance()
+        fragment.show(ft, "dialog_show")
     }
 }
 

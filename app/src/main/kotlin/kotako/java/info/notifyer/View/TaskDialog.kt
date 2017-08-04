@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.TextView
 import kotako.java.info.notifyer.Event.DateSetEvent
 import kotako.java.info.notifyer.Event.TaskCreatedEvent
+import kotako.java.info.notifyer.Event.TaskShowEvent
 import kotako.java.info.notifyer.Model.Task
 import kotako.java.info.notifyer.R
 import kotako.java.info.notifyer.View.Listener.DateSetListener
