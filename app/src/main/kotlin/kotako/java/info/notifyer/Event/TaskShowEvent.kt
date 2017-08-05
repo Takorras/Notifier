@@ -1,3 +1,3 @@
 package kotako.java.info.notifyer.Event
 
-class TaskShowEvent(){}
+class TaskShowEvent(val taskId: String)

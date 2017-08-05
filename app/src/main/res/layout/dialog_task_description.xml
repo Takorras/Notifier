@@ -37,7 +37,7 @@
             android:id="@+id/linear_milestone_dialog_task"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="16dp">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/linear_milestone_dialog_task"
-            android:layout_marginBottom="6dp">
+            android:layout_marginBottom="16dp">
 
             <ImageView
                 android:layout_width="wrap_content"

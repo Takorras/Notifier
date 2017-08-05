@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity() {
         if (prevFragment != null) ft.remove(prevFragment)
         ft.addToBackStack(null)
 
-        val fragment: DialogFragment = TaskDescriptionDialog.newInstance()
+        val fragment: DialogFragment = TaskDescriptionDialog.newInstance(e.taskId)
         fragment.show(ft, "dialog_show")
     }
 }
