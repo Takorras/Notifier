@@ -50,7 +50,7 @@
                 android:id="@+id/spinner_dialog_task"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Select Date... "
+                android:text="Milestone"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 style="@style/Widget.AppCompat.Spinner.Underlined"/>
 
@@ -68,20 +68,12 @@
                 android:layout_marginRight="16dp"
                 android:src="@mipmap/loyalty_grey" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/text_genre_dialog_task"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:hint="Category" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Category"/>
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/button_genre_dialog_task"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                style="@style/AppTheme.FlatButton"
-                android:text="Select" />
         </LinearLayout>
 
         <LinearLayout

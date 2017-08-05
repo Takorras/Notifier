@@ -6,6 +6,9 @@ import android.app.Dialog
 import android.app.DialogFragment
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.MultiAutoCompleteTextView
 import android.widget.TextView
 import kotako.java.info.notifyer.Event.DateSetEvent
 import kotako.java.info.notifyer.Event.TaskCreatedEvent
@@ -38,6 +41,9 @@ class TaskDialog : DialogFragment() {
         val calendar = GregorianCalendar()
         val datePickerDialog = DatePickerDialog(activity, DateSetListener(), calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DATE])
         (dialogView!!.findViewById(R.id.spinner_dialog_task) as TextView).setOnClickListener { datePickerDialog.show() }
+        val hoge:Array<String> = arrayOf("げりうんこ","ちんぽ")
+        (dialogView!!.findViewById(R.id.text_genre_dialog_task) as AutoCompleteTextView).setAdapter(
+                ArrayAdapter(activity, android.R.layout.simple_list_item_1, hoge))
 
 //      SaveボタンCancelボタンの作成とイベントのセット
         builder.setView(dialogView)
