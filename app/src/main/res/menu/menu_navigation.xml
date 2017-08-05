@@ -8,6 +8,11 @@
                 android:checkable="true"
                 android:icon="@mipmap/schedule_grey"
                 android:title="Recently" />
+            <item
+                android:id="@+id/menu_done"
+                android:checkable="true"
+                android:icon="@mipmap/check_grey"
+                android:title="Done" />
         </menu>
     </item>
 

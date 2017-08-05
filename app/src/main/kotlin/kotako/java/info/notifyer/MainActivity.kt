@@ -79,6 +79,9 @@ class MainActivity : AppCompatActivity() {
                         .replace(R.id.container, TasksFragment().newInstance())
                         .commit()
             }
+            R.id.menu_done -> {
+                toolbar.title = "Done"
+            }
             R.id.menu_setting -> {
                 toolbar.title = "Setting"
                 fab.hide()
