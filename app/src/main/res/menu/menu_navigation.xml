@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Tasks">
+        <menu>
+            <item
+                android:id="@+id/menu_recently"
+                android:checkable="true"
+                android:icon="@mipmap/schedule_grey"
+                android:title="Recently" />
+        </menu>
+    </item>
+
+    <item android:title="Other">
+        <menu>
+            <item
+                android:id="@+id/menu_sync"
+                android:checkable="true"
+                android:checked="false"
+                android:icon="@mipmap/sync_grey600"
+                android:title="Sync with Google" />
+            <item
+                android:id="@+id/menu_setting"
+                android:checkable="true"
+                android:checked="false"
+                android:icon="@mipmap/settings_grey"
+                android:title="Settings" />
+        </menu>
+    </item>
+
+</menu>

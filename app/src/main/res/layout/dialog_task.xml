@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linear_title_dialog_task"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:paddingTop="16dp"
+        android:paddingRight="24dp"
+        android:paddingLeft="24dp"
+        android:paddingBottom="8dp">
+
+        <EditText
+            android:id="@+id/text_title_dialog_task"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="New Task"
+            android:textColor="@color/colorTextAccent"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColorHint="@color/colorTextAccent"
+            android:textColorLink="@color/colorTextAccent" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="12dp"
+        android:paddingRight="24dp"
+        android:paddingLeft="24dp"
+        android:paddingBottom="12dp">
+
+        <LinearLayout
+            android:id="@+id/linear_milestone_dialog_task"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="8dp"
+                android:src="@mipmap/schedule_grey"/>
+
+            <TextView
+                android:id="@+id/spinner_dialog_task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Date... "
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                style="@style/Widget.AppCompat.Spinner.Underlined"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_genre_dialog_task"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linear_milestone_dialog_task">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="8dp"
+                android:src="@mipmap/loyalty_grey" />
+
+            <EditText
+                android:id="@+id/text_genre_dialog_task"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:hint="Category" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/button_genre_dialog_task"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                style="@style/AppTheme.FlatButton"
+                android:text="Select" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>
