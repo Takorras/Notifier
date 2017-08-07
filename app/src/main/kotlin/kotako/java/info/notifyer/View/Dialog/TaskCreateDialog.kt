@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Switch
 import android.widget.TextView
 import kotako.java.info.notifyer.Event.DateSetEvent
 import kotako.java.info.notifyer.Event.TaskCreatedEvent
@@ -19,26 +20,26 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 
-class TaskDialog : DialogFragment() {
+class TaskCreateDialog : DialogFragment() {
 
     var dialogView: View? = null
     var date: Date = Date()
 
     companion object {
-        fun newInstance(): TaskDialog {
-            return TaskDialog()
+        fun newInstance(): TaskCreateDialog {
+            return TaskCreateDialog()
         }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
-        dialogView = activity.layoutInflater.inflate(R.layout.dialog_task, null, false)
+        dialogView = activity.layoutInflater.inflate(R.layout.dialog_task_create, null, false)
 
 //      DatePickerの作成と、ボタンへのセット
         val calendar = GregorianCalendar()
         val datePickerDialog = DatePickerDialog(activity, DateSetListener(), calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DATE])
         (dialogView!!.findViewById(R.id.spinner_dialog_task) as TextView).setOnClickListener { datePickerDialog.show() }
-        val hoge:Array<String> = arrayOf("げりうんこ","ちんぽ")
+        val hoge: Array<String> = arrayOf("げりうんこ", "ちんぽ")
         (dialogView!!.findViewById(R.id.text_genre_dialog_task) as AutoCompleteTextView).setAdapter(
                 ArrayAdapter(activity, android.R.layout.simple_list_item_1, hoge))
 
@@ -64,7 +65,8 @@ class TaskDialog : DialogFragment() {
         return Task(
                 (dialogView!!.findViewById(R.id.text_title_dialog_task) as TextView).text.toString(),
                 (dialogView!!.findViewById(R.id.text_genre_dialog_task) as TextView).text.toString(),
-                date)
+                date,
+                (dialogView!!.findViewById(R.id.switch_notification_dialog) as Switch).isChecked)
     }
 
     //  DatePickerDialogのコールバックリスナから返ってくる、日付の値を処理
