@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotako.java.info.notifyer.Event.TaskActionEvent
+import kotako.java.info.notifyer.Event.TaskDestroyEvent
+import kotako.java.info.notifyer.Event.TaskDoneEvent
 import kotako.java.info.notifyer.Event.TaskShowEvent
 import kotako.java.info.notifyer.Model.Task
 import kotako.java.info.notifyer.R
@@ -20,7 +22,9 @@ class TaskRecyclerViewAdapter(val list: List<Task>) : RecyclerView.Adapter<TaskV
 
     override fun onBindViewHolder(holder: TaskViewHolder?, position: Int) {
         holder!!.contentView.text = list[position].content
-        holder.milestoneView.text = "あと${daysDiff(list[position].milestone)}日"
+        holder.milestoneView.text = diff(list[position].milestone)
+
+        holder.itemView.findViewById(R.id.button_done).setOnClickListener { EventBus.getDefault().post(TaskDoneEvent(holder.adapterPosition)) }
 
         holder.itemView.setOnClickListener { EventBus.getDefault().post(TaskShowEvent(list[holder.adapterPosition].id)) }
         holder.itemView.setOnLongClickListener {
@@ -32,7 +36,9 @@ class TaskRecyclerViewAdapter(val list: List<Task>) : RecyclerView.Adapter<TaskV
         return list.size
     }
 
-    fun daysDiff(date: Date): Long {
-        return (date.time - System.currentTimeMillis()) / 86400000
+    fun diff(date: Date): String {
+        val dayDiff = (date.time - System.currentTimeMillis()) / 86400000
+        val hourDiff = ((date.time - System.currentTimeMillis()) / 3600000) % 24
+        return "${dayDiff}日 ${hourDiff}時間"
     }
 }

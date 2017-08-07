@@ -12,6 +12,7 @@ import io.realm.Realm
 import io.realm.Sort
 import kotako.java.info.notifyer.Event.TaskCreatedEvent
 import kotako.java.info.notifyer.Event.TaskDestroyEvent
+import kotako.java.info.notifyer.Event.TaskDoneEvent
 import kotako.java.info.notifyer.Model.Task
 import kotako.java.info.notifyer.R
 import kotako.java.info.notifyer.View.Adapter.TaskRecyclerViewAdapter
@@ -78,6 +79,14 @@ class TasksFragment : Fragment() {
     fun onTaskDestroyed(e: TaskDestroyEvent) {
         val result = realm!!.where(Task::class.java).equalTo("id", list.removeAt(e.id).id).findAllSorted("milestone", Sort.DESCENDING)
         realm!!.executeTransaction { result.deleteAllFromRealm() }
+
+        recyclerView!!.adapter.notifyItemRemoved(e.id)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onTaskDone(e: TaskDoneEvent) {
+        val result = realm!!.where(Task::class.java).equalTo("id", list.removeAt(e.id).id).findAll().first()
+        realm!!.executeTransaction { result.isDone = true }
 
         recyclerView!!.adapter.notifyItemRemoved(e.id)
     }

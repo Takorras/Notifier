@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.app.DialogFragment
 import android.os.Bundle
 import android.view.View
+import android.widget.Switch
 import android.widget.TextView
 import io.realm.Realm
 import kotako.java.info.notifyer.Model.Task
@@ -42,6 +43,7 @@ class TaskDescriptionDialog : DialogFragment() {
             (inflate.findViewById(R.id.text_genre_dialog_task_description) as TextView).text = task!!.genre
             (inflate.findViewById(R.id.spinner_dialog_task_description) as TextView).text =
                     android.text.format.DateFormat.getLongDateFormat(activity).format(task!!.milestone)
+            (inflate.findViewById(R.id.switch_notification_dialog_description) as Switch).isChecked = task!!.isNotify
         }
 
         builder.setView(inflate)
