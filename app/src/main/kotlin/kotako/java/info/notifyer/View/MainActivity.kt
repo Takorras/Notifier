@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
 //      setting fragment
         fragmentManager.beginTransaction()
-                .replace(R.id.container, TasksFragment().newInstance())
+                .replace(R.id.container, TasksFragment.newInstance())
                 .commit()
     }
 
@@ -77,11 +77,14 @@ class MainActivity : AppCompatActivity() {
             R.id.menu_recently -> {
                 toolbar.title = "Recently"
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, TasksFragment().newInstance())
+                        .replace(R.id.container, TasksFragment.newInstance())
                         .commit()
             }
             R.id.menu_done -> {
                 toolbar.title = "Done"
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, DoneTasksFragment.newInstance())
+                        .commit()
             }
             R.id.menu_category -> {
                 toolbar.title = "Category"

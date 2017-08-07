@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import io.realm.Realm
 import io.realm.Sort
-import kotako.java.info.notifyer.Event.TaskCreatedEvent
 import kotako.java.info.notifyer.Event.TaskDestroyEvent
 import kotako.java.info.notifyer.Model.Task
 import kotako.java.info.notifyer.R
@@ -18,17 +17,16 @@ import kotako.java.info.notifyer.View.Adapter.TaskRecyclerViewAdapter
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import kotlin.collections.ArrayList
 
-class TasksFragment : Fragment() {
+class DoneTasksFragment : Fragment() {
 
     var recyclerView: RecyclerView? = null
     var list: ArrayList<Task> = ArrayList()
     var realm: Realm? = null
 
     companion object {
-        fun newInstance(): TasksFragment {
-            return TasksFragment()
+        fun newInstance(): DoneTasksFragment {
+            return DoneTasksFragment()
         }
     }
 
@@ -39,7 +37,7 @@ class TasksFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_tasks, container, false)
-        //(view.findViewById(R.id.text_title_list) as TextView).text = "直近のイベント"
+        //(view.findViewById(R.id.text_title_list) as TextView).text = "達成したタスク"
         recyclerView = view.findViewById(R.id.fragment_tasks) as RecyclerView
         recyclerView!!.layoutManager = LinearLayoutManager(activity.applicationContext)
         return view
@@ -50,7 +48,7 @@ class TasksFragment : Fragment() {
 
 //      RealmでTaskを全て持ってくる
         realm = Realm.getDefaultInstance()
-        list.addAll(realm!!.where(Task::class.java).equalTo("isDone", false).findAllSorted("milestone",Sort.ASCENDING))
+        list.addAll(realm!!.where(Task::class.java).equalTo("isDone", true).findAllSorted("milestone", Sort.ASCENDING))
 
         recyclerView!!.adapter = TaskRecyclerViewAdapter(list)
     }
@@ -63,14 +61,6 @@ class TasksFragment : Fragment() {
     override fun onDestroy() {
         realm!!.close()
         super.onDestroy()
-    }
-
-    // realmの保存とカードの作成
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onTaskCreated(e: TaskCreatedEvent) {
-        realm!!.executeTransaction { realm -> realm.copyToRealmOrUpdate(e.task) }
-        list.add(e.task)
-        recyclerView!!.adapter.notifyItemInserted(list.size - 1)
     }
 
     //  realmからの削除とカードの削除
