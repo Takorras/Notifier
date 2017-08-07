@@ -10,9 +10,11 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.widget.Toolbar
 import android.widget.Toast
 import kotako.java.info.notifyer.Event.NavigationEvent
+import kotako.java.info.notifyer.Event.TaskActionEvent
 import kotako.java.info.notifyer.Event.TaskShowEvent
 import kotako.java.info.notifyer.Event.ToastEvent
 import kotako.java.info.notifyer.R
+import kotako.java.info.notifyer.View.Dialog.TaskActionDialog
 import kotako.java.info.notifyer.View.Listener.NavigationListener
 import kotako.java.info.notifyer.View.Dialog.TaskDescriptionDialog
 import kotako.java.info.notifyer.View.Dialog.TaskDialog
@@ -114,6 +116,17 @@ class MainActivity : AppCompatActivity() {
 
         val fragment: DialogFragment = TaskDescriptionDialog.newInstance(e.taskId)
         fragment.show(ft, "dialog_show")
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun showTaskAction(e: TaskActionEvent) {
+        val ft = fragmentManager.beginTransaction()
+        val prevFragment = fragmentManager.findFragmentByTag("dialog_action")
+        if (prevFragment != null) ft.remove(prevFragment)
+        ft.addToBackStack(null)
+
+        val fragment: TaskActionDialog = TaskActionDialog.newInstance(e.id)
+        fragment.show(ft, "dialog_action")
     }
 }
 

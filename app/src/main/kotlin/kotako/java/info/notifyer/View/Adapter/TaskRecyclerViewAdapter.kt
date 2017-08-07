@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotako.java.info.notifyer.Event.TaskDestroyEvent
+import kotako.java.info.notifyer.Event.TaskActionEvent
 import kotako.java.info.notifyer.Event.TaskShowEvent
 import kotako.java.info.notifyer.Model.Task
 import kotako.java.info.notifyer.R
@@ -24,7 +24,7 @@ class TaskRecyclerViewAdapter(val list: List<Task>) : RecyclerView.Adapter<TaskV
 
         holder.itemView.setOnClickListener { EventBus.getDefault().post(TaskShowEvent(list[holder.adapterPosition].id)) }
         holder.itemView.setOnLongClickListener {
-            EventBus.getDefault().post(TaskDestroyEvent(holder.adapterPosition))
+            EventBus.getDefault().post(TaskActionEvent(holder.adapterPosition))
             true }
     }
 

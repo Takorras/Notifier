@@ -26,8 +26,7 @@ class TaskDialog : DialogFragment() {
 
     companion object {
         fun newInstance(): TaskDialog {
-            val fragment: TaskDialog = TaskDialog()
-            return fragment
+            return TaskDialog()
         }
     }
 
