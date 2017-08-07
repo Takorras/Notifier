@@ -10,5 +10,6 @@ open class Task(
         open var content: String = "New Task",
         open var genre: String = "",
         open var milestone: Date = Date(),
+        open var isDone: Boolean = false,
         @PrimaryKey open var id: String = UUID.randomUUID().toString())
     : RealmObject()
