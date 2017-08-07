@@ -82,6 +82,9 @@ class MainActivity : AppCompatActivity() {
             R.id.menu_done -> {
                 toolbar.title = "Done"
             }
+            R.id.menu_category -> {
+                toolbar.title = "Category"
+            }
             R.id.menu_setting -> {
                 toolbar.title = "Setting"
                 fab.hide()
