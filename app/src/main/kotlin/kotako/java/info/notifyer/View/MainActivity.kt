@@ -1,4 +1,4 @@
-package kotako.java.info.notifyer
+package kotako.java.info.notifyer.View
 
 import android.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
@@ -12,11 +12,10 @@ import android.widget.Toast
 import kotako.java.info.notifyer.Event.NavigationEvent
 import kotako.java.info.notifyer.Event.TaskShowEvent
 import kotako.java.info.notifyer.Event.ToastEvent
+import kotako.java.info.notifyer.R
 import kotako.java.info.notifyer.View.Listener.NavigationListener
-import kotako.java.info.notifyer.View.SettingFragment
-import kotako.java.info.notifyer.View.TaskDescriptionDialog
-import kotako.java.info.notifyer.View.TaskDialog
-import kotako.java.info.notifyer.View.TasksFragment
+import kotako.java.info.notifyer.View.Dialog.TaskDescriptionDialog
+import kotako.java.info.notifyer.View.Dialog.TaskDialog
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode

@@ -1,4 +1,4 @@
-package kotako.java.info.notifyer.View
+package kotako.java.info.notifyer.View.Dialog
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -8,11 +8,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.MultiAutoCompleteTextView
 import android.widget.TextView
 import kotako.java.info.notifyer.Event.DateSetEvent
 import kotako.java.info.notifyer.Event.TaskCreatedEvent
-import kotako.java.info.notifyer.Event.TaskShowEvent
 import kotako.java.info.notifyer.Model.Task
 import kotako.java.info.notifyer.R
 import kotako.java.info.notifyer.View.Listener.DateSetListener

@@ -45,7 +45,7 @@ class TasksFragment : Fragment() {
 
 //      RealmでTaskを全て持ってくる
         realm = Realm.getDefaultInstance()
-        list.addAll(realm!!.where(Task::class.java).findAll())
+        list.addAll(realm!!.where(Task::class.java).equalTo("isDone", false).findAll())
 
         recyclerView!!.adapter = TaskRecyclerViewAdapter(list)
     }

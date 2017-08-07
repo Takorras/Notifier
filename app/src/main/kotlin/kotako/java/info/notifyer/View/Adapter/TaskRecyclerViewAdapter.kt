@@ -8,7 +8,6 @@ import kotako.java.info.notifyer.Event.TaskDestroyEvent
 import kotako.java.info.notifyer.Event.TaskShowEvent
 import kotako.java.info.notifyer.Model.Task
 import kotako.java.info.notifyer.R
-import kotako.java.info.notifyer.View.TaskViewHolder
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 

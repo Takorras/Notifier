@@ -1,4 +1,4 @@
-package kotako.java.info.notifyer.View
+package kotako.java.info.notifyer.View.Dialog
 
 import android.app.AlertDialog
 import android.app.Dialog

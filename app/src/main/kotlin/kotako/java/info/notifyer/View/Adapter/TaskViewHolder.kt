@@ -1,4 +1,4 @@
-package kotako.java.info.notifyer.View
+package kotako.java.info.notifyer.View.Adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
