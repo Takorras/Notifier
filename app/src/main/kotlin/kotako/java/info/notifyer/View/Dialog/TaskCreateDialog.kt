@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Switch
 import android.widget.TextView
+import io.realm.Realm
 import kotako.java.info.notifyer.Event.DateSetEvent
 import kotako.java.info.notifyer.Event.TaskCreatedEvent
 import kotako.java.info.notifyer.Model.Task
@@ -39,9 +40,14 @@ class TaskCreateDialog : DialogFragment() {
         val calendar = GregorianCalendar()
         val datePickerDialog = DatePickerDialog(activity, DateSetListener(), calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DATE])
         (dialogView!!.findViewById(R.id.spinner_dialog_task) as TextView).setOnClickListener { datePickerDialog.show() }
-        val hoge: Array<String> = arrayOf("げりうんこ", "ちんぽ")
+        var genreList: Array<String> = arrayOf()
+        Realm.getDefaultInstance().use { realm ->
+            realm.executeTransaction {
+                genreList = realm.where(Task::class.java).distinct("genre").map { value -> value.genre }.toTypedArray()
+            }
+        }
         (dialogView!!.findViewById(R.id.text_genre_dialog_task) as AutoCompleteTextView).setAdapter(
-                ArrayAdapter(activity, android.R.layout.simple_list_item_1, hoge))
+                ArrayAdapter(activity, android.R.layout.simple_list_item_1, genreList))
 
 //      SaveボタンCancelボタンの作成とイベントのセット
         builder.setView(dialogView)
