@@ -6,7 +6,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     defaultConfig {
-        applicationId "kotako.java.info.notifyer"
+        applicationId "info.kotako.Taaker"
         minSdkVersion 22
         targetSdkVersion 22
         versionCode 1
