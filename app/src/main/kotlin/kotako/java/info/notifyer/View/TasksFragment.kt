@@ -13,6 +13,7 @@ import io.realm.Sort
 import kotako.java.info.notifyer.Event.TaskCreatedEvent
 import kotako.java.info.notifyer.Event.TaskDestroyEvent
 import kotako.java.info.notifyer.Event.TaskDoneEvent
+import kotako.java.info.notifyer.Event.ToastEvent
 import kotako.java.info.notifyer.Model.Task
 import kotako.java.info.notifyer.R
 import kotako.java.info.notifyer.View.Adapter.TaskRecyclerViewAdapter
@@ -51,7 +52,7 @@ class TasksFragment : Fragment() {
 
 //      RealmでTaskを全て持ってくる
         realm = Realm.getDefaultInstance()
-        list.addAll(realm!!.where(Task::class.java).equalTo("isDone", false).findAllSorted("milestone",Sort.ASCENDING))
+        list.addAll(realm!!.where(Task::class.java).equalTo("isDone", false).findAllSorted("milestone", Sort.ASCENDING))
 
         recyclerView!!.adapter = TaskRecyclerViewAdapter(list)
     }
@@ -69,6 +70,10 @@ class TasksFragment : Fragment() {
     // realmの保存とカードの作成
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onTaskCreated(e: TaskCreatedEvent) {
+        if (e.task.content == "") {
+            EventBus.getDefault().post(ToastEvent("タスクのタイトルは必ず入力して下さい"))
+            return
+        }
         realm!!.executeTransaction { realm -> realm.copyToRealmOrUpdate(e.task) }
         list.add(e.task)
         recyclerView!!.adapter.notifyItemInserted(list.size - 1)
