@@ -31,6 +31,18 @@ class TasksFragment : Fragment() {
         fun newInstance(): TasksFragment {
             return TasksFragment()
         }
+
+        fun newInstance(genre: String): TasksFragment {
+            val fragment: TasksFragment = TasksFragment()
+            val args: Bundle = Bundle()
+            if (genre == "None") {
+                args.putString("genre", "")
+            } else {
+                args.putString("genre", genre)
+            }
+            fragment.arguments = args
+            return fragment
+        }
     }
 
     override fun onStart() {
@@ -48,6 +60,13 @@ class TasksFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        if (arguments != null) {
+            realm = Realm.getDefaultInstance()
+            list.addAll(realm!!.where(Task::class.java).equalTo("genre", arguments.getString("genre")).findAllSorted("milestone", Sort.ASCENDING))
+            recyclerView!!.adapter = TaskRecyclerViewAdapter(list)
+            return
+        }
 
 //      RealmでTaskを全て持ってくる
         realm = Realm.getDefaultInstance()

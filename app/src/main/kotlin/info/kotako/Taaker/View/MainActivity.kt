@@ -9,10 +9,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.widget.Toolbar
 import android.widget.Toast
-import info.kotako.Taaker.Event.NavigationEvent
-import info.kotako.Taaker.Event.TaskActionEvent
-import info.kotako.Taaker.Event.TaskShowEvent
-import info.kotako.Taaker.Event.ToastEvent
+import info.kotako.Taaker.Event.*
 import info.kotako.Taaker.R
 import info.kotako.Taaker.View.Dialog.TaskActionDialog
 import info.kotako.Taaker.View.Listener.NavigationListener
@@ -88,6 +85,10 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.menu_category -> {
                 toolbar.title = "Category"
+                fab.hide()
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, CategoryFragment.newInstance())
+                        .commit()
             }
             R.id.menu_setting -> {
                 toolbar.title = "Setting"
@@ -108,6 +109,14 @@ class MainActivity : AppCompatActivity() {
     @Subscribe(threadMode = ThreadMode.ASYNC)
     fun showToast(e: ToastEvent) {
         runOnUiThread { Toast.makeText(applicationContext, e.msg, Toast.LENGTH_SHORT).show() }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun showTasks(e: CategorySelectedEvent) {
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, TasksFragment.newInstance(e.category))
+                .addToBackStack(null)
+                .commit()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
