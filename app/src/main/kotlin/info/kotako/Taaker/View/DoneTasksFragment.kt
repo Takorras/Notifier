@@ -1,4 +1,4 @@
-package kotako.java.info.notifyer.View
+package info.kotako.Taaker.View
 
 import android.app.Fragment
 import android.os.Bundle
@@ -7,30 +7,25 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import io.realm.Realm
 import io.realm.Sort
-import kotako.java.info.notifyer.Event.TaskCreatedEvent
-import kotako.java.info.notifyer.Event.TaskDestroyEvent
-import kotako.java.info.notifyer.Event.TaskDoneEvent
-import kotako.java.info.notifyer.Event.ToastEvent
-import kotako.java.info.notifyer.Model.Task
-import kotako.java.info.notifyer.R
-import kotako.java.info.notifyer.View.Adapter.TaskRecyclerViewAdapter
+import info.kotako.Taaker.Event.TaskDestroyEvent
+import info.kotako.Taaker.Model.Task
+import info.kotako.Taaker.R
+import info.kotako.Taaker.View.Adapter.TaskRecyclerViewAdapter
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import kotlin.collections.ArrayList
 
-class TasksFragment : Fragment() {
+class DoneTasksFragment : Fragment() {
 
     var recyclerView: RecyclerView? = null
     var list: ArrayList<Task> = ArrayList()
     var realm: Realm? = null
 
     companion object {
-        fun newInstance(): TasksFragment {
-            return TasksFragment()
+        fun newInstance(): DoneTasksFragment {
+            return DoneTasksFragment()
         }
     }
 
@@ -41,7 +36,7 @@ class TasksFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_tasks, container, false)
-        //(view.findViewById(R.id.text_title_list) as TextView).text = "直近のイベント"
+        //(view.findViewById(R.id.text_title_list) as TextView).text = "達成したタスク"
         recyclerView = view.findViewById(R.id.fragment_tasks) as RecyclerView
         recyclerView!!.layoutManager = LinearLayoutManager(activity.applicationContext)
         return view
@@ -52,7 +47,7 @@ class TasksFragment : Fragment() {
 
 //      RealmでTaskを全て持ってくる
         realm = Realm.getDefaultInstance()
-        list.addAll(realm!!.where(Task::class.java).equalTo("isDone", false).findAllSorted("milestone", Sort.ASCENDING))
+        list.addAll(realm!!.where(Task::class.java).equalTo("isDone", true).findAllSorted("milestone", Sort.ASCENDING))
 
         recyclerView!!.adapter = TaskRecyclerViewAdapter(list)
     }
@@ -67,31 +62,11 @@ class TasksFragment : Fragment() {
         super.onDestroy()
     }
 
-    // realmの保存とカードの作成
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onTaskCreated(e: TaskCreatedEvent) {
-        if (e.task.content == "") {
-            EventBus.getDefault().post(ToastEvent("タスクのタイトルは必ず入力して下さい"))
-            return
-        }
-        realm!!.executeTransaction { realm -> realm.copyToRealmOrUpdate(e.task) }
-        list.add(e.task)
-        recyclerView!!.adapter.notifyItemInserted(list.size - 1)
-    }
-
     //  realmからの削除とカードの削除
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onTaskDestroyed(e: TaskDestroyEvent) {
         val result = realm!!.where(Task::class.java).equalTo("id", list.removeAt(e.id).id).findAllSorted("milestone", Sort.DESCENDING)
         realm!!.executeTransaction { result.deleteAllFromRealm() }
-
-        recyclerView!!.adapter.notifyItemRemoved(e.id)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onTaskDone(e: TaskDoneEvent) {
-        val result = realm!!.where(Task::class.java).equalTo("id", list.removeAt(e.id).id).findAll().first()
-        realm!!.executeTransaction { result.isDone = true }
 
         recyclerView!!.adapter.notifyItemRemoved(e.id)
     }

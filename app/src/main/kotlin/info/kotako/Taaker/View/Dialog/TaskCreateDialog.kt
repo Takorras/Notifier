@@ -1,4 +1,4 @@
-package kotako.java.info.notifyer.View.Dialog
+package info.kotako.Taaker.View.Dialog
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -11,11 +11,11 @@ import android.widget.AutoCompleteTextView
 import android.widget.Switch
 import android.widget.TextView
 import io.realm.Realm
-import kotako.java.info.notifyer.Event.DateSetEvent
-import kotako.java.info.notifyer.Event.TaskCreatedEvent
-import kotako.java.info.notifyer.Model.Task
-import kotako.java.info.notifyer.R
-import kotako.java.info.notifyer.View.Listener.DateSetListener
+import info.kotako.Taaker.Event.DateSetEvent
+import info.kotako.Taaker.Event.TaskCreatedEvent
+import info.kotako.Taaker.Model.Task
+import info.kotako.Taaker.View.Listener.DateSetListener
+import info.kotako.Taaker.R
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode

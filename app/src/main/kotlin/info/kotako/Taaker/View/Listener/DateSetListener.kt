@@ -1,8 +1,8 @@
-package kotako.java.info.notifyer.View.Listener
+package info.kotako.Taaker.View.Listener
 
 import android.app.DatePickerDialog
 import android.widget.DatePicker
-import kotako.java.info.notifyer.Event.DateSetEvent
+import info.kotako.Taaker.Event.DateSetEvent
 import org.greenrobot.eventbus.EventBus
 import java.util.Calendar
 

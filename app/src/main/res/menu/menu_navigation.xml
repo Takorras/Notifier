@@ -12,7 +12,7 @@
                 android:id="@+id/menu_category"
                 android:checkable="true"
                 android:icon="@mipmap/loyalty_grey"
-                android:title="Cateory" />
+                android:title="Category" />
             <item
                 android:id="@+id/menu_done"
                 android:checkable="true"

@@ -1,11 +1,11 @@
-package kotako.java.info.notifyer.View.Dialog
+package info.kotako.Taaker.View.Dialog
 
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.DialogFragment
 import android.os.Bundle
-import kotako.java.info.notifyer.Event.TaskDestroyEvent
-import kotako.java.info.notifyer.R
+import info.kotako.Taaker.Event.TaskDestroyEvent
+import info.kotako.Taaker.R
 import org.greenrobot.eventbus.EventBus
 
 class TaskActionDialog : DialogFragment() {

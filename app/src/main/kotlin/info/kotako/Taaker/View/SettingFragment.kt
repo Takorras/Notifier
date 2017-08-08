@@ -1,8 +1,8 @@
-package kotako.java.info.notifyer.View
+package info.kotako.Taaker.View
 
 import android.os.Bundle
 import android.preference.PreferenceFragment
-import kotako.java.info.notifyer.R
+import info.kotako.Taaker.R
 
 class SettingFragment : PreferenceFragment() {
 

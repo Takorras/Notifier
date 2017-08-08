@@ -1,4 +1,4 @@
-package kotako.java.info.notifyer.Model
+package info.kotako.Taaker.Model
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey

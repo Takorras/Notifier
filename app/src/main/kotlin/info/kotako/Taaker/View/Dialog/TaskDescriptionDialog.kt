@@ -1,4 +1,4 @@
-package kotako.java.info.notifyer.View.Dialog
+package info.kotako.Taaker.View.Dialog
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -8,8 +8,8 @@ import android.view.View
 import android.widget.Switch
 import android.widget.TextView
 import io.realm.Realm
-import kotako.java.info.notifyer.Model.Task
-import kotako.java.info.notifyer.R
+import info.kotako.Taaker.Model.Task
+import info.kotako.Taaker.R
 
 class TaskDescriptionDialog : DialogFragment() {
 

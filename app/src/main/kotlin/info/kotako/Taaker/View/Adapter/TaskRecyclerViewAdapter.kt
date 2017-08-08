@@ -1,15 +1,14 @@
-package kotako.java.info.notifyer.View.Adapter
+package info.kotako.Taaker.View.Adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotako.java.info.notifyer.Event.TaskActionEvent
-import kotako.java.info.notifyer.Event.TaskDestroyEvent
-import kotako.java.info.notifyer.Event.TaskDoneEvent
-import kotako.java.info.notifyer.Event.TaskShowEvent
-import kotako.java.info.notifyer.Model.Task
-import kotako.java.info.notifyer.R
+import info.kotako.Taaker.Event.TaskActionEvent
+import info.kotako.Taaker.Event.TaskDoneEvent
+import info.kotako.Taaker.Event.TaskShowEvent
+import info.kotako.Taaker.Model.Task
+import info.kotako.Taaker.R
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 

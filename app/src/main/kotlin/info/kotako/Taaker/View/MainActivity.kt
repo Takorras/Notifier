@@ -1,4 +1,4 @@
-package kotako.java.info.notifyer.View
+package info.kotako.Taaker.View
 
 import android.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
@@ -9,15 +9,15 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.widget.Toolbar
 import android.widget.Toast
-import kotako.java.info.notifyer.Event.NavigationEvent
-import kotako.java.info.notifyer.Event.TaskActionEvent
-import kotako.java.info.notifyer.Event.TaskShowEvent
-import kotako.java.info.notifyer.Event.ToastEvent
-import kotako.java.info.notifyer.R
-import kotako.java.info.notifyer.View.Dialog.TaskActionDialog
-import kotako.java.info.notifyer.View.Listener.NavigationListener
-import kotako.java.info.notifyer.View.Dialog.TaskDescriptionDialog
-import kotako.java.info.notifyer.View.Dialog.TaskCreateDialog
+import info.kotako.Taaker.Event.NavigationEvent
+import info.kotako.Taaker.Event.TaskActionEvent
+import info.kotako.Taaker.Event.TaskShowEvent
+import info.kotako.Taaker.Event.ToastEvent
+import info.kotako.Taaker.R
+import info.kotako.Taaker.View.Dialog.TaskActionDialog
+import info.kotako.Taaker.View.Listener.NavigationListener
+import info.kotako.Taaker.View.Dialog.TaskDescriptionDialog
+import info.kotako.Taaker.View.Dialog.TaskCreateDialog
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
 //      setting Toolbar
         val toolbar = findViewById(R.id.toolbar) as Toolbar
-        toolbar.title = "Notifier"
+        toolbar.title = "Recently"
         toolbar.setNavigationIcon(R.mipmap.menu_white)
         toolbar.setNavigationOnClickListener { (findViewById(R.id.drawer) as DrawerLayout).openDrawer(GravityCompat.START) }
 

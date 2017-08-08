@@ -1,4 +1,4 @@
-package kotako.java.info.notifyer
+package info.kotako.Taaker
 
 import android.app.Application
 import io.realm.Realm

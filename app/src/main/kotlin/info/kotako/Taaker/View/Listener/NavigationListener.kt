@@ -1,8 +1,8 @@
-package kotako.java.info.notifyer.View.Listener
+package info.kotako.Taaker.View.Listener
 
 import android.support.design.widget.NavigationView
 import android.view.MenuItem
-import kotako.java.info.notifyer.Event.NavigationEvent
+import info.kotako.Taaker.Event.NavigationEvent
 import org.greenrobot.eventbus.EventBus
 
 class NavigationListener : NavigationView.OnNavigationItemSelectedListener{
