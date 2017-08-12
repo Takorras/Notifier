@@ -1,6 +1,10 @@
 package info.kotako.Taaker.View
 
+import android.app.AlarmManager
+import android.app.Application
 import android.app.Fragment
+import android.app.PendingIntent
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -15,6 +19,7 @@ import info.kotako.Taaker.Event.TaskDoneEvent
 import info.kotako.Taaker.Event.ToastEvent
 import info.kotako.Taaker.Model.Task
 import info.kotako.Taaker.R
+import info.kotako.Taaker.Service.Notification
 import info.kotako.Taaker.View.Adapter.TaskRecyclerViewAdapter
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -85,7 +90,7 @@ class TasksFragment : Fragment() {
         super.onDestroy()
     }
 
-    // realmの保存とカードの作成
+    // realmの保存とカードの作成,通知のセットsta
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onTaskCreated(e: TaskCreatedEvent) {
         if (e.task.content == "") {
@@ -95,6 +100,11 @@ class TasksFragment : Fragment() {
         realm!!.executeTransaction { realm -> realm.copyToRealmOrUpdate(e.task) }
         list.add(e.task)
         recyclerView!!.adapter.notifyItemInserted(list.size - 1)
+
+        // notification
+        val pendingIntent: PendingIntent = PendingIntent.getBroadcast(activity, 0, Intent(activity, Notification::class.java), PendingIntent.FLAG_CANCEL_CURRENT)
+        (activity.getSystemService(Application.ALARM_SERVICE) as AlarmManager)
+                .set(AlarmManager.RTC_WAKEUP, e.task.milestone.time - 36000, pendingIntent)
     }
 
     //  realmからの削除とカードの削除
