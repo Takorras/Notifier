@@ -4,12 +4,6 @@
         android:key="preference_task_setting"
         android:title="Task">
 
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="example_switch"
-            android:summary="@string/pref_description_social_recommendations"
-            android:title="@string/pref_title_social_recommendations" />
-
         <EditTextPreference
             android:capitalize="words"
             android:defaultValue="@string/pref_default_display_name"
@@ -28,6 +22,17 @@
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
             android:title="@string/pref_title_add_friends_to_messages" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="preference_notification_setting"
+        android:title="Notification">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="notification_switch"
+            android:summary="通知機能をオフにすることができます"
+            android:title="Enable notification service"/>
     </PreferenceCategory>
 
 </PreferenceScreen>
