@@ -107,7 +107,7 @@ class TasksFragment : Fragment() {
                 PendingIntent.FLAG_CANCEL_CURRENT)
 
         (activity.getSystemService(Application.ALARM_SERVICE) as AlarmManager)
-                .set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 800, pendingIntent)
+                .set(AlarmManager.RTC_WAKEUP, e.task.milestone.time - 8640000, pendingIntent)
     }
 
     //  realmからの削除とカードの削除
