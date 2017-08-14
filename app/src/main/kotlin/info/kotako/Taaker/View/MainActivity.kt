@@ -141,5 +141,3 @@ class MainActivity : AppCompatActivity() {
         fragment.show(ft, "dialog_action")
     }
 }
-
-
