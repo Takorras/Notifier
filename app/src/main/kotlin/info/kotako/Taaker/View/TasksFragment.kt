@@ -102,9 +102,12 @@ class TasksFragment : Fragment() {
         recyclerView!!.adapter.notifyItemInserted(list.size - 1)
 
         // notification
-        val pendingIntent: PendingIntent = PendingIntent.getBroadcast(activity, 0, Intent(activity, Notification::class.java), PendingIntent.FLAG_CANCEL_CURRENT)
+        val pendingIntent: PendingIntent = PendingIntent.getBroadcast(activity, 0,
+                Intent(activity, Notification::class.java).putExtra("content", e.task.content),
+                PendingIntent.FLAG_CANCEL_CURRENT)
+
         (activity.getSystemService(Application.ALARM_SERVICE) as AlarmManager)
-                .set(AlarmManager.RTC_WAKEUP, e.task.milestone.time - 36000, pendingIntent)
+                .set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 800, pendingIntent)
     }
 
     //  realmからの削除とカードの削除

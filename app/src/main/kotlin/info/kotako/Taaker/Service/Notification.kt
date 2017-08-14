@@ -14,12 +14,14 @@ import info.kotako.Taaker.View.MainActivity
 class Notification : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
-
         val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), PendingIntent.FLAG_CANCEL_CURRENT)
+
+        var msg = "あと1日だよ"
+        if (intent!!.hasExtra("content")) msg = intent.getStringExtra("content") + " まであと1日"
 
         val notification: Notification = NotificationCompat.Builder(context)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentText("あと1日だよ")
+                .setContentText(msg)
                 .setContentIntent(pendingIntent)
                 .build()
 
