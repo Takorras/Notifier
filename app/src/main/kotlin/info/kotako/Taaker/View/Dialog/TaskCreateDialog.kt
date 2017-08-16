@@ -19,6 +19,7 @@ import info.kotako.Taaker.R
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.text.DateFormat
 import java.util.*
 
 class TaskCreateDialog : DialogFragment() {
@@ -37,9 +38,11 @@ class TaskCreateDialog : DialogFragment() {
         dialogView = activity.layoutInflater.inflate(R.layout.dialog_task_create, null, false)
 
 //      DatePickerの作成と、ボタンへのセット
-        val calendar = GregorianCalendar()
+        val calendar = GregorianCalendar(TimeZone.getDefault())
         val datePickerDialog = DatePickerDialog(activity, DateSetListener(), calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DATE])
         (dialogView!!.findViewById(R.id.spinner_dialog_task) as TextView).setOnClickListener { datePickerDialog.show() }
+
+//      ジャンルの予測変換リストを作成
         var genreList: Array<String> = arrayOf()
         Realm.getDefaultInstance().use { realm ->
             realm.executeTransaction {
@@ -80,6 +83,7 @@ class TaskCreateDialog : DialogFragment() {
     fun onDateSet(e: DateSetEvent) {
         date = e.date
         (dialogView!!.findViewById(R.id.spinner_dialog_task) as TextView).text =
-                android.text.format.DateFormat.getLongDateFormat(activity).format(date)
+                DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault()).format(date)
     }
 }
+

@@ -25,11 +25,12 @@ class TaskRecyclerViewAdapter(val list: List<Task>) : RecyclerView.Adapter<TaskV
         holder.checkboxDone.isChecked = list[position].isDone
 
         // カードにクリックイベントを実装
-        holder.itemView.findViewById(R.id.checkbox_done).setOnClickListener { EventBus.getDefault().post(TaskDoneEvent(holder.adapterPosition))}
+        holder.itemView.findViewById(R.id.checkbox_done).setOnClickListener { EventBus.getDefault().post(TaskDoneEvent(holder.adapterPosition)) }
         holder.itemView.setOnClickListener { EventBus.getDefault().post(TaskShowEvent(list[holder.adapterPosition].id)) }
         holder.itemView.setOnLongClickListener {
             EventBus.getDefault().post(TaskActionEvent(holder.adapterPosition))
-            true }
+            true
+        }
     }
 
     override fun getItemCount(): Int {
@@ -39,6 +40,11 @@ class TaskRecyclerViewAdapter(val list: List<Task>) : RecyclerView.Adapter<TaskV
     fun diff(date: Date): String {
         val dayDiff = (date.time - System.currentTimeMillis()) / 86400000
         val hourDiff = ((date.time - System.currentTimeMillis()) / 3600000) % 24
+
+        if (dayDiff < 1) {
+            if (date.time < System.currentTimeMillis()) return "${Math.abs(dayDiff)}日 ${Math.abs(hourDiff)}時間 の超過"
+            return "${hourDiff}時間"
+        }
         return "${dayDiff}日 ${hourDiff}時間"
     }
 }
