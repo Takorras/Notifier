@@ -16,8 +16,8 @@ class Notification : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), PendingIntent.FLAG_CANCEL_CURRENT)
 
-        var msg = "あと1日だよ"
-        if (intent!!.hasExtra("content")) msg = intent.getStringExtra("content") + " まであと1日"
+        var msg = "Check your task..."
+        if (intent!!.hasExtra("content")) msg = intent.getStringExtra("content") + " をする日です!😉"
 
         val notification: Notification = NotificationCompat.Builder(context)
                 .setSmallIcon(R.mipmap.ic_launcher)
