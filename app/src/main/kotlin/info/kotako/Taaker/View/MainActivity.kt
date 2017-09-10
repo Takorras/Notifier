@@ -11,10 +11,12 @@ import android.support.v7.widget.Toolbar
 import android.widget.Toast
 import info.kotako.Taaker.Event.*
 import info.kotako.Taaker.R
+import info.kotako.Taaker.View.Animation.FabTransform
 import info.kotako.Taaker.View.Dialog.TaskActionDialog
 import info.kotako.Taaker.View.Listener.NavigationListener
 import info.kotako.Taaker.View.Dialog.TaskDescriptionDialog
 import info.kotako.Taaker.View.Dialog.TaskCreateDialog
+import info.kotako.Taaker.View.Fragment.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -39,7 +41,10 @@ class MainActivity : AppCompatActivity() {
             if (prevFragment != null) ft.remove(prevFragment)
             ft.addToBackStack(null)
 
+            //TransitionManager.beginDelayedTransition(findViewById(R.id.fab) as ViewGroup, FabTransform())
+            //TransitionManager.go(Scene(findViewById(R.id.fab) as ViewGroup, findViewById(R.id.dialog_create)))
             val fragment: DialogFragment = TaskCreateDialog.newInstance()
+            fragment.sharedElementEnterTransition = FabTransform()
             fragment.show(ft, "dialog_create")
         }
 
@@ -99,6 +104,9 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.menu_sync -> {
                 toolbar.title = "Sync with Google"
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, SyncTaskFragment.newInstance())
+                        .commit()
                 fab.hide()
             }
         }

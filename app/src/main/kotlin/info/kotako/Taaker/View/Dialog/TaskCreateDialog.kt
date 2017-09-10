@@ -16,6 +16,7 @@ import info.kotako.Taaker.Event.TaskCreatedEvent
 import info.kotako.Taaker.Model.Task
 import info.kotako.Taaker.View.Listener.DateSetListener
 import info.kotako.Taaker.R
+import info.kotako.Taaker.View.Animation.FabTransform
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -31,6 +32,10 @@ class TaskCreateDialog : DialogFragment() {
         fun newInstance(): TaskCreateDialog {
             return TaskCreateDialog()
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
