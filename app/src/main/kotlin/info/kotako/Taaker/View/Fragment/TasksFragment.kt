@@ -1,4 +1,4 @@
-package info.kotako.Taaker.View.Fragment
+package info.kotako.Taaker.View
 
 import android.app.AlarmManager
 import android.app.Application
@@ -6,7 +6,6 @@ import android.app.Fragment
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -103,11 +102,11 @@ class TasksFragment : Fragment() {
         recyclerView!!.adapter.notifyItemInserted(list.size - 1)
 
         // notificationの作成とイベントを飛ばしておく
-        if (!e.task.isNotify || !PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("key_pref_notification", true)) return
+        if (!e.task.isNotify) return
         val pendingIntent: PendingIntent = PendingIntent.getBroadcast(activity, 0,
                 Intent(activity, Notification::class.java).putExtra("content", e.task.content),
                 PendingIntent.FLAG_CANCEL_CURRENT)
-
+//e.task.milestone.time - 86400000
         (activity.getSystemService(Application.ALARM_SERVICE) as AlarmManager)
                 .setExact(AlarmManager.RTC_WAKEUP, e.task.milestone.time , pendingIntent)
     }

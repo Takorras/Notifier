@@ -12,7 +12,7 @@
             android:maxLines="1"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="" />
+            android:title="@string/pref_title_display_name" />
 
         <ListPreference
             android:defaultValue="-1"
@@ -30,14 +30,9 @@
 
         <SwitchPreference
             android:defaultValue="true"
-            android:key="key_pref_notification"
+            android:key="notification_switch"
             android:summary="通知機能をオフにすることができます"
-            android:title="Enable notification"/>
-
-        <EditTextPreference
-            android:key="notification_timing"
-            android:summary="タスクの何時間前に通知を表示するか設定する"
-            android:title="Notification"/>
+            android:title="Enable notification service"/>
     </PreferenceCategory>
 
 </PreferenceScreen>
