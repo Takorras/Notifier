@@ -24,16 +24,16 @@ class TaskActionDialog : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if (arguments == null) return
-        taskId = arguments.getInt("taskId")
+        arguments?.let { arg -> taskId = arg.getInt("taskId") }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
-        builder.setView(activity.layoutInflater.inflate(R.layout.dialog_task_action, null, false))
-                .setPositiveButton("Yes", { _, _ -> EventBus.getDefault().post(TaskDestroyEvent(taskId!!)) })
-                .setNegativeButton("No", { _, _ -> dismiss() })
+        taskId?.let { id ->
+            builder.setView(activity.layoutInflater.inflate(R.layout.dialog_task_action, null, false))
+                    .setPositiveButton("Yes", { _, _ -> EventBus.getDefault().post(TaskDestroyEvent(id)) })
+                    .setNegativeButton("No", { _, _ -> dismiss() })
+        }
         return builder.create()
     }
 }
