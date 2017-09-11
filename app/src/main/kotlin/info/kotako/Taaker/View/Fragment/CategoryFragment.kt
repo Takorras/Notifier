@@ -8,10 +8,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import info.kotako.Taaker.Event.ToolbarSetTitleEvent
 import info.kotako.Taaker.Model.Task
 import info.kotako.Taaker.R
 import info.kotako.Taaker.View.Adapter.CategoryRecyclerViewAdapter
 import io.realm.Realm
+import org.greenrobot.eventbus.EventBus
 
 class CategoryFragment : Fragment() {
 
@@ -36,6 +38,7 @@ class CategoryFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        EventBus.getDefault().post(ToolbarSetTitleEvent("Category"))
         val view = inflater.inflate(R.layout.fragment_tasks, container, false)
         recyclerView = view.findViewById(R.id.fragment_tasks) as RecyclerView
         recyclerView?.addItemDecoration(DividerItemDecoration(recyclerView?.context, LinearLayoutManager(activity).orientation))

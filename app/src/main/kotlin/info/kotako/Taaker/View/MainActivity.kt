@@ -1,12 +1,14 @@
 package info.kotako.Taaker.View
 
 import android.app.DialogFragment
+import android.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.Toolbar
 import android.transition.Slide
 import android.view.Gravity
@@ -25,6 +27,9 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class MainActivity : AppCompatActivity() {
+
+    val KEY_BACK_HOME = "home"
+    val KEY_BACK_CATEGORY = "category"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,27 +74,37 @@ class MainActivity : AppCompatActivity() {
         super.onStop()
     }
 
+    override fun onBackPressed() {
+        if (fragmentManager.backStackEntryCount == 0) {
+            AlertDialog.Builder(this)
+                    .setMessage("Exit?")
+                    .setPositiveButton("Yes", { _, _ -> finishAndRemoveTask() })
+                    .setNegativeButton("No", null)
+                    .create()
+                    .show()
+            return
+        }
+        super.onBackPressed()
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onNavigationChanged(e: NavigationEvent) {
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
         val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.show()
+        fragmentManager.popBackStackImmediate(KEY_BACK_CATEGORY, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 
         when (e.itemId) {
             R.id.menu_recently -> {
-                toolbar.title = "Recently"
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, TasksFragment.newInstance())
                         .commit()
             }
             R.id.menu_done -> {
-                toolbar.title = "Done"
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, DoneTasksFragment.newInstance())
                         .commit()
             }
             R.id.menu_category -> {
-                toolbar.title = "Category"
                 fab.hide()
                 val fragment = CategoryFragment.newInstance()
                 fragment.enterTransition = Slide(Gravity.END)
@@ -98,14 +113,12 @@ class MainActivity : AppCompatActivity() {
                         .commit()
             }
             R.id.menu_setting -> {
-                toolbar.title = "Setting"
                 fab.hide()
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, SettingFragment())
                         .commit()
             }
             R.id.menu_sync -> {
-                toolbar.title = "Sync with Google"
                 fab.hide()
             }
         }
@@ -119,10 +132,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
+    fun setToolbarTitle(e: ToolbarSetTitleEvent) {
+        (findViewById(R.id.toolbar) as Toolbar).title = e.title
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun showTasks(e: CategorySelectedEvent) {
         fragmentManager.beginTransaction()
                 .replace(R.id.container, TasksFragment.newInstance(e.category))
-                .addToBackStack(null)
+                .addToBackStack(KEY_BACK_CATEGORY)
                 .commit()
     }
 

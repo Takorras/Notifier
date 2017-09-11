@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import io.realm.Realm
 import io.realm.Sort
 import info.kotako.Taaker.Event.TaskDestroyEvent
+import info.kotako.Taaker.Event.ToolbarSetTitleEvent
 import info.kotako.Taaker.Model.Task
 import info.kotako.Taaker.R
 import info.kotako.Taaker.View.Adapter.TaskRecyclerViewAdapter
@@ -35,6 +36,7 @@ class DoneTasksFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        EventBus.getDefault().post(ToolbarSetTitleEvent("Done"))
         val view = inflater.inflate(R.layout.fragment_tasks, container, false)
         recyclerView = view.findViewById(R.id.fragment_tasks) as RecyclerView
         recyclerView?.layoutManager = LinearLayoutManager(activity.applicationContext)

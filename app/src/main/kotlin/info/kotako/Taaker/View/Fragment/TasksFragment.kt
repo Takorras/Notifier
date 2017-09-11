@@ -12,12 +12,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import info.kotako.Taaker.Event.*
 import io.realm.Realm
 import io.realm.Sort
-import info.kotako.Taaker.Event.TaskCreatedEvent
-import info.kotako.Taaker.Event.TaskDestroyEvent
-import info.kotako.Taaker.Event.TaskDoneEvent
-import info.kotako.Taaker.Event.ToastEvent
 import info.kotako.Taaker.Model.Task
 import info.kotako.Taaker.R
 import info.kotako.Taaker.Service.Notification
@@ -57,6 +54,9 @@ class TasksFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        EventBus.getDefault().post(ToolbarSetTitleEvent("Recently"))
+        arguments?.let { EventBus.getDefault().post(ToolbarSetTitleEvent(it.getString("genre").takeIf { it != "" } ?: "None")) }
+
         val view = inflater.inflate(R.layout.fragment_tasks, container, false)
         recyclerView = view.findViewById(R.id.fragment_tasks) as RecyclerView
         recyclerView?.layoutManager = LinearLayoutManager(activity.applicationContext)
