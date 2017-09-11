@@ -1,4 +1,4 @@
-package info.kotako.Taaker.View
+package info.kotako.Taaker.View.Fragment
 
 import android.app.Fragment
 import android.os.Bundle
@@ -36,9 +36,8 @@ class DoneTasksFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_tasks, container, false)
-        //(view.findViewById(R.id.text_title_list) as TextView).text = "達成したタスク"
         recyclerView = view.findViewById(R.id.fragment_tasks) as RecyclerView
-        recyclerView!!.layoutManager = LinearLayoutManager(activity.applicationContext)
+        recyclerView?.layoutManager = LinearLayoutManager(activity.applicationContext)
         return view
     }
 
@@ -49,7 +48,7 @@ class DoneTasksFragment : Fragment() {
         realm = Realm.getDefaultInstance()
         list.addAll(realm!!.where(Task::class.java).equalTo("isDone", true).findAllSorted("milestone", Sort.ASCENDING))
 
-        recyclerView!!.adapter = TaskRecyclerViewAdapter(list)
+        recyclerView?.adapter = TaskRecyclerViewAdapter(list)
     }
 
     override fun onStop() {
@@ -58,16 +57,17 @@ class DoneTasksFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        realm!!.close()
+        realm?.close()
         super.onDestroy()
     }
 
     //  realmからの削除とカードの削除
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onTaskDestroyed(e: TaskDestroyEvent) {
-        val result = realm!!.where(Task::class.java).equalTo("id", list.removeAt(e.id).id).findAllSorted("milestone", Sort.DESCENDING)
-        realm!!.executeTransaction { result.deleteAllFromRealm() }
-
-        recyclerView!!.adapter.notifyItemRemoved(e.id)
+        realm?.let { realm ->
+            val result = realm.where(Task::class.java).equalTo("id", list.removeAt(e.id).id).findAll().first()
+            realm.executeTransaction { result.isDone = true }
+        }
+        recyclerView?.adapter?.notifyItemRemoved(e.id)
     }
 }

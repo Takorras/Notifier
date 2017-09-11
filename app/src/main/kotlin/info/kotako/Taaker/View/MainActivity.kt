@@ -8,6 +8,8 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.widget.Toolbar
+import android.transition.Slide
+import android.view.Gravity
 import android.widget.Toast
 import info.kotako.Taaker.Event.*
 import info.kotako.Taaker.R
@@ -15,6 +17,9 @@ import info.kotako.Taaker.View.Dialog.TaskActionDialog
 import info.kotako.Taaker.View.Listener.NavigationListener
 import info.kotako.Taaker.View.Dialog.TaskDescriptionDialog
 import info.kotako.Taaker.View.Dialog.TaskCreateDialog
+import info.kotako.Taaker.View.Fragment.CategoryFragment
+import info.kotako.Taaker.View.Fragment.DoneTasksFragment
+import info.kotako.Taaker.View.Fragment.TasksFragment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -86,8 +91,10 @@ class MainActivity : AppCompatActivity() {
             R.id.menu_category -> {
                 toolbar.title = "Category"
                 fab.hide()
+                val fragment = CategoryFragment.newInstance()
+                fragment.enterTransition = Slide(Gravity.END)
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, CategoryFragment.newInstance())
+                        .replace(R.id.container, fragment)
                         .commit()
             }
             R.id.menu_setting -> {
