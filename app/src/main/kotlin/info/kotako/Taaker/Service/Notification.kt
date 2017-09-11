@@ -13,11 +13,11 @@ import info.kotako.Taaker.View.MainActivity
 
 class Notification : BroadcastReceiver() {
 
-    override fun onReceive(context: Context?, intent: Intent?) {
+    override fun onReceive(context: Context?, intent: Intent) {
         val pendingIntent: PendingIntent =
                 PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), PendingIntent.FLAG_CANCEL_CURRENT)
 
-        if (!intent!!.hasExtra("content")) return
+        if (!intent.hasExtra("content")) return
         val msg = intent.getStringExtra("content") + " をする日です!😉"
 
         val notification: Notification = NotificationCompat.Builder(context)

@@ -38,13 +38,13 @@ class CategoryFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_tasks, container, false)
         recyclerView = view.findViewById(R.id.fragment_tasks) as RecyclerView
-        recyclerView!!.addItemDecoration(DividerItemDecoration(recyclerView!!.context, LinearLayoutManager(activity).orientation))
-        recyclerView!!.layoutManager = LinearLayoutManager(activity.applicationContext)
+        recyclerView?.addItemDecoration(DividerItemDecoration(recyclerView?.context, LinearLayoutManager(activity).orientation))
+        recyclerView?.layoutManager = LinearLayoutManager(activity.applicationContext)
         return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        recyclerView!!.adapter = CategoryRecyclerViewAdapter(list)
+        recyclerView?.adapter = CategoryRecyclerViewAdapter(list)
     }
 }

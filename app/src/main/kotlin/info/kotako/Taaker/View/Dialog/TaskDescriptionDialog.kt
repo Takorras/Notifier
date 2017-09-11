@@ -38,18 +38,17 @@ class TaskDescriptionDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
         val inflate: View = activity.layoutInflater.inflate(R.layout.dialog_task_description, null, false)
-        if (task != null) {
-            (inflate.findViewById(R.id.text_title_dialog_task_description) as TextView).text = task!!.content
-            (inflate.findViewById(R.id.text_genre_dialog_task_description) as TextView).text = task!!.genre
+
+        task?.let { task ->
+            (inflate.findViewById(R.id.text_title_dialog_task_description) as TextView).text = task.content
+            (inflate.findViewById(R.id.text_genre_dialog_task_description) as TextView).text = task.genre
             (inflate.findViewById(R.id.spinner_dialog_task_description) as TextView).text =
-                    android.text.format.DateFormat.getLongDateFormat(activity).format(task!!.milestone)
-            (inflate.findViewById(R.id.switch_notification_dialog_description) as Switch).isChecked = task!!.isNotify
+                    android.text.format.DateFormat.getLongDateFormat(activity).format(task.milestone)
+            (inflate.findViewById(R.id.switch_notification_dialog_description) as Switch).isChecked = task.isNotify
         }
 
         builder.setView(inflate)
                 .setPositiveButton("OK", { _, _ -> dismiss() })
-
         return builder.create()
     }
-
 }

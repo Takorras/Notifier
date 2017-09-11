@@ -10,13 +10,13 @@ import org.greenrobot.eventbus.EventBus
 
 class CategoryRecyclerViewAdapter(val list: List<String>) : RecyclerView.Adapter<CategoryViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): CategoryViewHolder {
-        val inflate: View = LayoutInflater.from(parent!!.context).inflate(R.layout.cellview_category, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
+        val inflate: View = LayoutInflater.from(parent.context).inflate(R.layout.cellview_category, parent, false)
         return CategoryViewHolder(inflate)
     }
 
-    override fun onBindViewHolder(holder: CategoryViewHolder?, position: Int) {
-        holder!!.genreView.text = list[position]
+    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
+        holder.genreView.text = list[position]
         holder.itemView.setOnClickListener { EventBus.getDefault().post(CategorySelectedEvent(list[position])) }
     }
 

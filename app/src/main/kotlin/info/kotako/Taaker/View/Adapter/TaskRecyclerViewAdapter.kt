@@ -14,13 +14,13 @@ import java.util.*
 
 class TaskRecyclerViewAdapter(val list: List<Task>) : RecyclerView.Adapter<TaskViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TaskViewHolder {
-        val inflate: View = LayoutInflater.from(parent!!.context).inflate(R.layout.cardview_task, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
+        val inflate: View = LayoutInflater.from(parent.context).inflate(R.layout.cardview_task, parent, false)
         return TaskViewHolder(inflate)
     }
 
-    override fun onBindViewHolder(holder: TaskViewHolder?, position: Int) {
-        holder!!.contentView.text = list[position].content
+    override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
+        holder.contentView.text = list[position].content
         holder.milestoneView.text = diff(list[position].milestone)
         holder.checkboxDone.isChecked = list[position].isDone
 

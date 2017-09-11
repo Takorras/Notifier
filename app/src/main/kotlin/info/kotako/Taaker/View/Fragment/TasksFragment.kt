@@ -1,4 +1,4 @@
-package info.kotako.Taaker.View
+package info.kotako.Taaker.View.Fragment
 
 import android.app.AlarmManager
 import android.app.Application
@@ -6,6 +6,7 @@ import android.app.Fragment
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -57,19 +58,18 @@ class TasksFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_tasks, container, false)
-        //(view.findViewById(R.id.text_title_list) as TextView).text = "直近のイベント"
         recyclerView = view.findViewById(R.id.fragment_tasks) as RecyclerView
-        recyclerView!!.layoutManager = LinearLayoutManager(activity.applicationContext)
+        recyclerView?.layoutManager = LinearLayoutManager(activity.applicationContext)
         return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        if (arguments != null) {
+        arguments?.let { arg ->
             realm = Realm.getDefaultInstance()
-            list.addAll(realm!!.where(Task::class.java).equalTo("genre", arguments.getString("genre")).findAllSorted("milestone", Sort.ASCENDING))
-            recyclerView!!.adapter = TaskRecyclerViewAdapter(list)
+            list.addAll(realm!!.where(Task::class.java).equalTo("genre", arg.getString("genre")).findAllSorted("milestone", Sort.ASCENDING))
+            recyclerView?.adapter = TaskRecyclerViewAdapter(list)
             return
         }
 
@@ -77,7 +77,7 @@ class TasksFragment : Fragment() {
         realm = Realm.getDefaultInstance()
         list.addAll(realm!!.where(Task::class.java).equalTo("isDone", false).findAllSorted("milestone", Sort.ASCENDING))
 
-        recyclerView!!.adapter = TaskRecyclerViewAdapter(list)
+        recyclerView?.adapter = TaskRecyclerViewAdapter(list)
     }
 
     override fun onStop() {
@@ -86,7 +86,7 @@ class TasksFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        realm!!.close()
+        realm?.close()
         super.onDestroy()
     }
 
@@ -97,34 +97,35 @@ class TasksFragment : Fragment() {
             EventBus.getDefault().post(ToastEvent("タスクのタイトルは必ず入力して下さい"))
             return
         }
-        realm!!.executeTransaction { realm -> realm.copyToRealmOrUpdate(e.task) }
+        realm?.executeTransaction { realm -> realm.copyToRealmOrUpdate(e.task) }
         list.add(e.task)
-        recyclerView!!.adapter.notifyItemInserted(list.size - 1)
+        recyclerView?.adapter?.notifyItemInserted(list.size - 1)
 
         // notificationの作成とイベントを飛ばしておく
-        if (!e.task.isNotify) return
+        if (!e.task.isNotify || !PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("notification_switch", true)) return
         val pendingIntent: PendingIntent = PendingIntent.getBroadcast(activity, 0,
                 Intent(activity, Notification::class.java).putExtra("content", e.task.content),
                 PendingIntent.FLAG_CANCEL_CURRENT)
-//e.task.milestone.time - 86400000
         (activity.getSystemService(Application.ALARM_SERVICE) as AlarmManager)
-                .setExact(AlarmManager.RTC_WAKEUP, e.task.milestone.time , pendingIntent)
+                .setExact(AlarmManager.RTC_WAKEUP, e.task.milestone.time, pendingIntent)
     }
 
     //  realmからの削除とカードの削除
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onTaskDestroyed(e: TaskDestroyEvent) {
-        val result = realm!!.where(Task::class.java).equalTo("id", list.removeAt(e.id).id).findAllSorted("milestone", Sort.DESCENDING)
-        realm!!.executeTransaction { result.deleteAllFromRealm() }
-
-        recyclerView!!.adapter.notifyItemRemoved(e.id)
+        realm?.let { realm ->
+            val result = realm.where(Task::class.java).equalTo("id", list.removeAt(e.id).id).findAllSorted("milestone", Sort.DESCENDING)
+            realm.executeTransaction { result.deleteAllFromRealm() }
+        }
+        recyclerView?.adapter?.notifyItemRemoved(e.id)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onTaskDone(e: TaskDoneEvent) {
-        val result = realm!!.where(Task::class.java).equalTo("id", list.removeAt(e.id).id).findAll().first()
-        realm!!.executeTransaction { result.isDone = true }
-
-        recyclerView!!.adapter.notifyItemRemoved(e.id)
+        realm?.let { realm ->
+            val result = realm.where(Task::class.java).equalTo("id", list.removeAt(e.id).id).findAll().first()
+            realm.executeTransaction { result.isDone = true }
+        }
+        recyclerView?.adapter?.notifyItemRemoved(e.id)
     }
 }

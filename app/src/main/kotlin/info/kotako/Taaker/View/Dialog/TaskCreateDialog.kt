@@ -40,7 +40,7 @@ class TaskCreateDialog : DialogFragment() {
 //      DatePickerの作成と、ボタンへのセット
         val calendar = GregorianCalendar(TimeZone.getDefault())
         val datePickerDialog = DatePickerDialog(activity, DateSetListener(), calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DATE])
-        (dialogView!!.findViewById(R.id.spinner_dialog_task) as TextView).setOnClickListener { datePickerDialog.show() }
+        (dialogView?.findViewById(R.id.spinner_dialog_task) as TextView).setOnClickListener { datePickerDialog.show() }
 
 //      ジャンルの予測変換リストを作成
         var genreList: Array<String> = arrayOf()
@@ -49,7 +49,7 @@ class TaskCreateDialog : DialogFragment() {
                 genreList = realm.where(Task::class.java).distinct("genre").map { value -> value.genre }.toTypedArray()
             }
         }
-        (dialogView!!.findViewById(R.id.text_genre_dialog_task) as AutoCompleteTextView).setAdapter(
+        (dialogView?.findViewById(R.id.text_genre_dialog_task) as AutoCompleteTextView).setAdapter(
                 ArrayAdapter(activity, android.R.layout.simple_list_item_1, genreList))
 
 //      SaveボタンCancelボタンの作成とイベントのセット
@@ -82,8 +82,7 @@ class TaskCreateDialog : DialogFragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onDateSet(e: DateSetEvent) {
         date = e.date
-        (dialogView!!.findViewById(R.id.spinner_dialog_task) as TextView).text =
+        (dialogView?.findViewById(R.id.spinner_dialog_task) as TextView).text =
                 DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault()).format(date)
     }
 }
-
